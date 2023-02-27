@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.example.odsas.students_module.presentation.home_screen.HomeScreen
+import com.example.odsas.students_module.presentation.navigation.SetUpHomeNavigation
 import com.example.odsas.ui.theme.OdsasTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -27,7 +28,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    HomeScreen(navHostController = rememberNavController())
+                    SetUpHomeNavigation()
                 }
             }
         }

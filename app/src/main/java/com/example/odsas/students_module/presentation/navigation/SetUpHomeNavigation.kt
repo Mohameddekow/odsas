@@ -5,16 +5,18 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.odsas.deans_module.presentation.analysis_screen.AnalysisScreen
+import com.example.odsas.students_module.presentation.book_appointment_screen.BookAppointmentScreen
 import com.example.odsas.students_module.presentation.home_screen.HomeScreen
 import com.example.odsas.students_module.presentation.screens.Screens
 
 @Composable
 fun SetUpHomeNavigation() {
 
-    val navHostController: NavHostController = rememberNavController()
+    val navController: NavHostController = rememberNavController()
 
     NavHost(
-        navController = navHostController,
+        navController = navController,
         startDestination = Screens.HomeScreen.route
     ) {
 
@@ -28,7 +30,23 @@ fun SetUpHomeNavigation() {
             route = Screens.HomeScreen.route
         ) {
             HomeScreen(
-                navHostController = navHostController,
+                navController = navController,
+            )
+        }
+
+        composable(
+            route = Screens.BookAppointmentScreen.route
+        ) {
+            BookAppointmentScreen(
+                navController = navController,
+            )
+        }
+
+        composable(
+            route = Screens.AnalysisScreen.route
+        ) {
+            AnalysisScreen(
+                navController = navController,
             )
         }
     }

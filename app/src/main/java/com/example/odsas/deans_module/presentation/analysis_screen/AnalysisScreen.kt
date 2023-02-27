@@ -1,23 +1,23 @@
-package com.example.odsas.students_module.presentation.home_screen
+package com.example.odsas.deans_module.presentation.analysis_screen
+
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.Center
+import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import com.example.odsas.R
 import com.example.odsas.students_module.domain.model.BottomNavigationMenuItemModel
 import com.example.odsas.students_module.presentation.home_screen.componets.BottomNavigationMenu
-import com.example.odsas.students_module.presentation.home_screen.componets.BottomNavigationMenuItem
-
 
 @Composable
-fun HomeScreen(navController: NavHostController) {
-
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
-        Text(text = "Home Screen", modifier = Modifier)
+fun AnalysisScreen(navController: NavHostController) {
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Center){
+        Text(text = "Analysis Screen", modifier = Modifier)
 
         BottomNavigationMenu(
             navController = navController,
@@ -27,7 +27,7 @@ fun HomeScreen(navController: NavHostController) {
                 BottomNavigationMenuItemModel(title = "analysis", iconId = R.drawable.analysis)
             ),
             modifier = Modifier.align(Alignment.BottomCenter),
-            selectedItemIndex = 0
+            selectedItemIndex = 2
         )
     }
 }
