@@ -7,7 +7,7 @@
 - Create a branch against main
 - Create a PR to main. PullRequests must pass the following checks;
     * Must be approved by a code owner
-    * Include all your tests(now or later)
+    * Include all your tests
     * Send pull request once all your inter depending commits are complete
     * Must have every conversation resolved before merging
 - We encourage you to use [git rebase](https://www.atlassian.com/git/tutorials/rewriting-history/git-rebase#:~:text=What%20is%20git%20rebase%3F,of%20a%20feature%20branching%20workflow.) for a linear history
