@@ -14,7 +14,7 @@
 
 
 ## Naming conventions
-[we only have 2 modules `students` and `dean`]
+[we only have 2 modules, `students` and `dean`]
 - All Compose navigation Destination components must be suffixed with `Screen` ie. `StudentsScreen`
 - All components inside a screen must be suffixed with suffixed with the word `Component` ie. `StudentsComponent`
 - All ViewModels must be suffixed with the word `ViewModel` ie. `HomeViewModel`
