@@ -1,4 +1,4 @@
-# odsas
+# ODSAS
 
 
 ## Contributing guidelines
