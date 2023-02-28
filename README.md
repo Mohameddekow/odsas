@@ -41,3 +41,5 @@
 ### DON'T
 - Don't include the word `impl` in a repository implementation name. Use `DataRepository` instead.
 
+---
+>  PRs are :)
