@@ -15,7 +15,9 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.odsas.students_module.domain.model.BottomNavigationMenuItemModel
 import com.example.odsas.students_module.presentation.screens.Screens
-
+import com.example.odsas.ui.theme.CustomBlack
+import com.example.odsas.ui.theme.CustomBlue
+import com.example.odsas.ui.theme.CustomWhite
 
 
 @Composable
@@ -32,7 +34,7 @@ fun BottomNavigationMenuItem(
             .clip(RoundedCornerShape(10.dp))
             .clickable { onItemClick() }
             .background(
-                color =if (itemIsSelected) Color.Blue.copy(0.6f) else  Color.Transparent
+                color =if (itemIsSelected) CustomBlue.copy(0.6f) else  Color.Transparent
                 // nothing happens
             )
             .padding(4.dp),
@@ -43,8 +45,8 @@ fun BottomNavigationMenuItem(
             painter = painterResource(id = items.iconId),
             contentDescription = items.title,
             modifier = Modifier
-                .size(30.dp),
-            tint = if (itemIsSelected) Color.Black else Color.White
+                .size(23.dp),
+            tint = if (itemIsSelected) CustomWhite else CustomBlack
         )
     }
 

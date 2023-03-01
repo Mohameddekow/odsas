@@ -16,6 +16,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.odsas.students_module.domain.model.BottomNavigationMenuItemModel
 import com.example.odsas.students_module.presentation.screens.Screens
+import com.example.odsas.ui.theme.CustomBlue
+import com.example.odsas.ui.theme.CustomWhite
 
 
 @Composable
@@ -36,7 +38,7 @@ fun BottomNavigationMenu(
     ) {
 
         Divider(
-            color = Color.Blue.copy(0.4f),
+            color = CustomBlue.copy(0.4f),
             thickness = 0.5.dp,
             modifier = Modifier.fillMaxWidth()
         )
@@ -44,7 +46,7 @@ fun BottomNavigationMenu(
         Row(
             modifier = modifier
                 .background(
-                    color = Color.Black
+                    color = CustomWhite
 //                    color = if (!darkTheme) LightModeBackgroundWhite else Color.Black
                 )
                 .padding(top = 7.dp, bottom = 8.dp, end = 8.dp)
