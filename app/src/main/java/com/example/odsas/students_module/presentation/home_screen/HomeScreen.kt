@@ -1,23 +1,35 @@
 package com.example.odsas.students_module.presentation.home_screen
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.odsas.R
 import com.example.odsas.students_module.domain.model.BottomNavigationMenuItemModel
 import com.example.odsas.students_module.presentation.home_screen.componets.BottomNavigationMenu
 import com.example.odsas.students_module.presentation.home_screen.componets.BottomNavigationMenuItem
+import com.example.odsas.students_module.presentation.home_screen.componets.TopBar
 
 
 @Composable
 fun HomeScreen(navController: NavHostController) {
 
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
-        Text(text = "Home Screen", modifier = Modifier)
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            TopBar(navController = rememberNavController())
+            Text(text = "Home Screen", modifier = Modifier)
+        }
+
+
 
         BottomNavigationMenu(
             navController = navController,
