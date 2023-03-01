@@ -11,7 +11,8 @@ val CustomWhite = Color(0xFFF5F5F5)
 val CustomBlack = Color(0xFF000000)
 val LightGreyBg = Color(0xDCD9D9D9)
 //val CustomBlue = Color(0xFF4B72D6)
-val CustomBlue = Color(0xFF1243C2)
+//val CustomBlue = Color(0xFF1243C2)
+val CustomBlue = Color(0xFF004AAD)
 
 
 /* initial default colors

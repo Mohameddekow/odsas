@@ -8,14 +8,12 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.odsas.R
 import com.example.odsas.students_module.domain.model.BottomNavigationMenuItemModel
-import com.example.odsas.students_module.presentation.home_screen.componets.BottomNavigationMenu
-import com.example.odsas.students_module.presentation.home_screen.componets.BottomNavigationMenuItem
-import com.example.odsas.students_module.presentation.home_screen.componets.SearchBar
-import com.example.odsas.students_module.presentation.home_screen.componets.TopBar
+import com.example.odsas.students_module.presentation.home_screen.componets.*
 
 
 @Composable
@@ -28,6 +26,9 @@ fun HomeScreen(navController: NavHostController) {
         ) {
             TopBar(navController = rememberNavController())
             SearchBar()
+
+
+            NextAppointmentBox()
             Text(text = "Home Screen", modifier = Modifier)
         }
 

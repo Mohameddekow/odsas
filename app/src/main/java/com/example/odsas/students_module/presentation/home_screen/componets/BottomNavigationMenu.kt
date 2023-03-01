@@ -38,7 +38,7 @@ fun BottomNavigationMenu(
     ) {
 
         Divider(
-            color = CustomBlue.copy(0.4f),
+            color = CustomBlue.copy(0.9f),
             thickness = 0.5.dp,
             modifier = Modifier.fillMaxWidth()
         )

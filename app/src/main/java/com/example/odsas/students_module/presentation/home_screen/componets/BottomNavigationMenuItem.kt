@@ -34,7 +34,7 @@ fun BottomNavigationMenuItem(
             .clip(RoundedCornerShape(10.dp))
             .clickable { onItemClick() }
             .background(
-                color =if (itemIsSelected) CustomBlue.copy(0.6f) else  Color.Transparent
+                color =if (itemIsSelected) CustomBlue.copy(1f) else  Color.Transparent
                 // nothing happens
             )
             .padding(4.dp),
