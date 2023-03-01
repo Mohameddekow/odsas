@@ -36,13 +36,13 @@ fun TopBar(
 
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
-                .data(null) //image
+                .data(null) //profile image
                 .crossfade(true)
                 .build(),
             placeholder = painterResource(R.drawable.placeholder),
             contentDescription = "image",
             modifier = Modifier
-                .size(40.dp)
+                .size(44.dp)
                 .alpha(1f)
                 .clip(RoundedCornerShape(50)),
             contentScale = ContentScale.Crop,

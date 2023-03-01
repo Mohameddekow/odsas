@@ -14,6 +14,7 @@ import com.example.odsas.R
 import com.example.odsas.students_module.domain.model.BottomNavigationMenuItemModel
 import com.example.odsas.students_module.presentation.home_screen.componets.BottomNavigationMenu
 import com.example.odsas.students_module.presentation.home_screen.componets.BottomNavigationMenuItem
+import com.example.odsas.students_module.presentation.home_screen.componets.SearchBar
 import com.example.odsas.students_module.presentation.home_screen.componets.TopBar
 
 
@@ -26,6 +27,7 @@ fun HomeScreen(navController: NavHostController) {
             verticalArrangement = Arrangement.Center
         ) {
             TopBar(navController = rememberNavController())
+            SearchBar()
             Text(text = "Home Screen", modifier = Modifier)
         }
 
