@@ -1,9 +1,6 @@
 package com.example.odsas.students_module.presentation.home_screen
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -12,6 +9,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.odsas.R
+import com.example.odsas.students_module.domain.model.AppointmentsTabItemModel
 import com.example.odsas.students_module.domain.model.BottomNavigationMenuItemModel
 import com.example.odsas.students_module.presentation.home_screen.componets.*
 
@@ -19,17 +17,41 @@ import com.example.odsas.students_module.presentation.home_screen.componets.*
 @Composable
 fun HomeScreen(navController: NavHostController) {
 
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
+    Box(modifier = Modifier.fillMaxSize(),){
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+            verticalArrangement = Arrangement.Top
         ) {
             TopBar(navController = rememberNavController())
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            WelcomeCard()
+
+            Spacer(modifier = Modifier.height(10.dp))
+
             SearchBar()
 
+            Spacer(modifier = Modifier.height(10.dp))
+
+            ServicesCard()
+
+            Spacer(modifier = Modifier.height(10.dp))
 
             NextAppointmentBox()
-            Text(text = "Home Screen", modifier = Modifier)
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+//            AppointmentsTab(
+//                navController = navController,
+//                items = listOf(
+//                    AppointmentsTabItemModel(title = "Upcoming"),
+//                    AppointmentsTabItemModel(title = "Successful"),
+//                ),
+//                // modifier = Modifier.align(Alignment.BottomCenter),
+//                selectedItemIndex = -1 //none is selected at the start
+//            )
+
         }
 
 

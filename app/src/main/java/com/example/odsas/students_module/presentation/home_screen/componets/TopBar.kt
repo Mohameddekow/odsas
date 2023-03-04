@@ -39,7 +39,7 @@ fun TopBar(
                 .data(null) //profile image
                 .crossfade(true)
                 .build(),
-            placeholder = painterResource(R.drawable.placeholder),
+            placeholder = painterResource(R.drawable.dr_mutua),
             contentDescription = "image",
             modifier = Modifier
                 .size(44.dp)
