@@ -1,4 +1,4 @@
-package com.example.odsas.students_module.presentation.home_screen.componets
+package com.example.odsas.students_module.presentation.appointments.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -36,23 +36,8 @@ import com.example.odsas.ui.theme.CustomWhite
 
 
 @Composable
-fun NextAppointmentBox() {
+fun NextAppointmentBox(navController: NavHostController) {
 
-//    Card(
-//
-//        //set card elevation of the card
-//        modifier = Modifier
-//            .clip(RoundedCornerShape(10.dp))
-//            .shadow(
-//                ambientColor = Color.Blue,
-//                elevation = 25.dp,
-//                clip = true,
-//                spotColor = Color.Blue
-//            ),
-//        elevation = 10.dp,
-//
-//        //backgroundColor = CustomBlue,
-//    ) {
     Card(
         elevation = 15.dp,
         modifier = Modifier
@@ -79,6 +64,11 @@ fun NextAppointmentBox() {
                         .clip(RoundedCornerShape(8.dp))
                             .clickable {
                                 //click event
+                                navController.navigate(Screens.UpcomingAppointmentScreen.route) {
+                                    popUpTo(Screens.UpcomingAppointmentScreen.route) {
+                                        inclusive = true
+                                    }
+                                }
                             }
                          .padding(4.dp),
                     fontSize = 20.sp,

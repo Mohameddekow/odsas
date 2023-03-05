@@ -11,8 +11,8 @@ import com.example.odsas.students_module.presentation.home_screen.HomeScreen
 import com.example.odsas.students_module.presentation.notification_screen.NotificationScreen
 import com.example.odsas.students_module.presentation.profile_screen.ProfileScreen
 import com.example.odsas.students_module.presentation.screens.Screens
-import com.example.odsas.students_module.presentation.successful_appointment_screen.SuccessfulAppointmentScreen
-import com.example.odsas.students_module.presentation.upcoming_appointments_screen.UpcomingAppointmentScreen
+import com.example.odsas.students_module.presentation.appointments.successful_appointment_screen.SuccessfulAppointmentScreen
+import com.example.odsas.students_module.presentation.appointments.upcoming_appointments_screen.UpcomingAppointmentScreen
 
 @Composable
 fun SetUpHomeNavigation() {
@@ -74,7 +74,7 @@ fun SetUpHomeNavigation() {
             route = Screens.SuccessfulAppointmentScreen.route
         ) {
             SuccessfulAppointmentScreen(
-//                navController = navController,
+                navController = navController,
             )
         }
 
@@ -82,7 +82,7 @@ fun SetUpHomeNavigation() {
             route = Screens.UpcomingAppointmentScreen.route
         ) {
              UpcomingAppointmentScreen(
-//                navController = navController,
+                navController = navController,
             )
         }
     }

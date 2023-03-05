@@ -1,4 +1,4 @@
-package com.example.odsas.students_module.presentation.home_screen.componets
+package com.example.odsas.students_module.presentation.appointments.components
 
 
 import androidx.compose.foundation.background
@@ -30,9 +30,9 @@ fun AppointmentsTabItem(
     Box(
         modifier = modifier
             .padding(top = 5.dp, bottom = 5.dp, end = 4.dp)
-            .clip(RoundedCornerShape(3.dp))
-            .border(0.1.dp, Color.DarkGray)
-            .clip(RoundedCornerShape(6.dp))
+            .clip(RoundedCornerShape(50))
+//            .border(0.1.dp, Color.DarkGray)
+//            .clip(RoundedCornerShape(6.dp))
             .clickable { onItemClick() }
             .background(
                 color = if (itemIsSelected) activeItemColor else Color.Transparent
@@ -46,7 +46,7 @@ fun AppointmentsTabItem(
             text = items.title,
             color = if (itemIsSelected) Color.White else Color.Black,
             fontSize = 20.sp,
-            modifier = Modifier.padding(horizontal = 8.dp, vertical = 12.dp)
+            modifier = Modifier.padding(horizontal = 8.dp, vertical = 7.dp)
         )
     }
 
