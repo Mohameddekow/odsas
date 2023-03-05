@@ -36,7 +36,7 @@ fun SearchBar() {
 
     OutlinedTextField(
         modifier = Modifier
-            .padding(vertical = 0.dp, horizontal = 10.dp)
+            .padding(vertical = 0.dp, horizontal = 3.dp)
             .fillMaxWidth()
             .shadow(1.dp, shape = RoundedCornerShape(0.dp)),
 

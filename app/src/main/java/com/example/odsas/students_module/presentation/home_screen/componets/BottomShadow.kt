@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 fun BottomShadow(alpha: Float = 0.1f, height: Dp = 2.dp) {
     Box(modifier = Modifier
         .clip(RoundedCornerShape(1.dp))
-        .fillMaxWidth(0.95f)
+        .fillMaxWidth(0.98f)
         .height(height)
         .background(
             brush = Brush.verticalGradient(

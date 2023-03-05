@@ -1,9 +1,6 @@
 package com.example.odsas.students_module.presentation.home_screen.componets
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -18,12 +15,26 @@ fun WelcomeCard() {
     Card(
         elevation = 10.dp,
         modifier = Modifier
-            .height(60.dp)
+//            .height(60.dp)
             .fillMaxWidth(0.95f),
     ) {
-        Box(modifier = Modifier.padding(5.dp), contentAlignment = Alignment.CenterStart){
+        Box(modifier = Modifier.padding(1.dp), contentAlignment = Alignment.CenterStart){
 
-            Text(text = "Welcome back, Moha", fontSize = 24.sp, fontWeight = FontWeight.Bold)
+            Column(
+                modifier = Modifier.padding(2.dp),
+                horizontalAlignment = Alignment.Start,
+                verticalArrangement = Arrangement.Center
+            ) {
+
+                Spacer(modifier = Modifier.height(15.dp))
+
+                Text(text = "Welcome back, Moha", fontSize = 24.sp, fontWeight = FontWeight.Bold)
+
+                Spacer(modifier = Modifier.height(15.dp))
+
+                SearchBar()
+            }
+
         }
     }
 }

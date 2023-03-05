@@ -19,16 +19,18 @@ import com.example.odsas.R
 @Composable
 fun ServicesCard() {
     Card(
-        elevation = 20.dp,
+        elevation = 15.dp,
         modifier = Modifier
             .padding(vertical = 1.dp,)
             .fillMaxWidth(0.95f),
     ) {
         Column(modifier = Modifier.padding(1.dp)) {
 
+            Spacer(modifier = Modifier.height(10.dp))
+
             Text(
                 text = "Services",
-                modifier = Modifier.padding(vertical = 5.dp, horizontal = 10.dp),
+                modifier = Modifier.padding(vertical = 5.dp, horizontal = 15.dp),
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold
             )
