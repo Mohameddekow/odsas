@@ -34,7 +34,7 @@ fun HomeScreen(navController: NavHostController) {
             WelcomeCard()
 
             Spacer(modifier = Modifier.height(20.dp))
-            ServicesCard()
+            ServicesCard(navController = navController)
 
             Spacer(modifier = Modifier.height(20.dp))
             NextAppointmentBox()

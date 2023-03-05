@@ -1,5 +1,6 @@
 package com.example.odsas.students_module.presentation.home_screen.componets
 
+import androidx.compose.foundation.clickable
 import com.example.odsas.R
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -44,7 +45,15 @@ fun TopBar(
             modifier = Modifier
                 .size(44.dp)
                 .alpha(1f)
-                .clip(RoundedCornerShape(50)),
+                .clip(RoundedCornerShape(50))
+                .clickable {
+                    //click event
+                    navController.navigate(Screens.ProfileScreen.route) {
+                        popUpTo(Screens.ProfileScreen.route) {
+                            inclusive = true
+                        }
+                    }
+                },
             contentScale = ContentScale.Crop,
             fallback = painterResource(id = R.drawable.placeholder)
         )
