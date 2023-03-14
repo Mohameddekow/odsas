@@ -7,6 +7,8 @@ plugins {
     
     id 'kotlin-parcelize'
 
+    //Google services Gradle plugin
+    id 'com.google.gms.google-services'
 
 //    kotlin("kapt")
 //    id("com.google.dagger.hilt.android")
@@ -98,8 +100,8 @@ dependencies {
     //Glide
     implementation 'com.github.bumptech.glide:glide:4.12.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
-@todo*/
 
+@todo*/
     // Compose dependencies //@TODO THE LATEST VERSION IS NOT COMPATIBLE
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.5.0-rc01"
     implementation "androidx.navigation:navigation-compose:2.5.0-rc01" //nav in compose
@@ -134,6 +136,18 @@ dependencies {
     // Accompanist
     implementation "com.google.accompanist:accompanist-pager:0.23.0" // Pager
     implementation "com.google.accompanist:accompanist-pager-indicators:0.23.0" // Pager Indicators
+
+
+    // Import the Firebase BoM
+    implementation platform('com.google.firebase:firebase-bom:31.1.0')
+
+
+    // TODO: Add the dependencies for Firebase products you want to use
+    // When using the BoM, don't specify versions in Firebase dependencies
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-auth-ktx' //Auth
+    implementation 'com.google.firebase:firebase-firestore-ktx' //Firestore
+    implementation 'com.google.firebase:firebase-storage-ktx' //Storage
 }
 
 // Allow references to generated code
