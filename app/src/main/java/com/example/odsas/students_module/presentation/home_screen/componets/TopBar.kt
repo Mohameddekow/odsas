@@ -1,5 +1,6 @@
 package com.example.odsas.students_module.presentation.home_screen.componets
 
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import com.example.odsas.R
 import androidx.compose.foundation.layout.*
@@ -11,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -37,10 +39,10 @@ fun TopBar(
 
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
-                .data(null) //profile image
+                .data(R.drawable.mohamed) //profile image
                 .crossfade(true)
                 .build(),
-            placeholder = painterResource(R.drawable.dr_mutua),
+            placeholder = painterResource(R.drawable.mohamed),
             contentDescription = "image",
             modifier = Modifier
                 .size(44.dp)

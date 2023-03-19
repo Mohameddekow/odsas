@@ -33,7 +33,7 @@ fun ScreenTitleBar(title: String, navController: NavHostController) {
                 painter = painterResource(id = R.drawable.arrow_left),
                 contentDescription = "menu",
                 modifier = Modifier
-                    .size(36.dp),
+                    .size(38.dp),
 //                tint = Color.White,
             )
         }
@@ -41,7 +41,7 @@ fun ScreenTitleBar(title: String, navController: NavHostController) {
         Text(
             text = title,
             fontWeight = FontWeight.Bold,
-            fontSize = 20.sp,
+            fontSize = 24.sp,
             modifier = Modifier.padding(start = 10.dp)
         )
     }

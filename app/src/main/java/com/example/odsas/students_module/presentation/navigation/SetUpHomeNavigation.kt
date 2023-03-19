@@ -13,6 +13,8 @@ import com.example.odsas.students_module.presentation.profile_screen.ProfileScre
 import com.example.odsas.students_module.presentation.screens.Screens
 import com.example.odsas.students_module.presentation.appointments.successful_appointment_screen.SuccessfulAppointmentScreen
 import com.example.odsas.students_module.presentation.appointments.upcoming_appointments_screen.UpcomingAppointmentScreen
+import com.example.odsas.students_module.presentation.auth.login_screen.LoginScreen
+import com.example.odsas.students_module.presentation.auth.registration_screen.RegistrationScreen
 
 @Composable
 fun SetUpHomeNavigation() {
@@ -82,6 +84,23 @@ fun SetUpHomeNavigation() {
             route = Screens.UpcomingAppointmentScreen.route
         ) {
              UpcomingAppointmentScreen(
+                navController = navController,
+            )
+        }
+
+        //Auth
+        composable(
+            route = Screens.LoginScreen.route
+        ) {
+             LoginScreen(
+                navController = navController,
+            )
+        }
+
+        composable(
+            route = Screens.RegistrationScreen.route
+        ) {
+             RegistrationScreen(
                 navController = navController,
             )
         }

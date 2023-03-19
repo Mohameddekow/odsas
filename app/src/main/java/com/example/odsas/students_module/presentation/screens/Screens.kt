@@ -11,5 +11,7 @@ sealed class Screens(val route: String) {
     object SuccessfulAppointmentScreen : Screens(route = "successful_app_screen")
 
     object UpcomingAppointmentScreen : Screens(route = "upcoming_app_screen")
+    object LoginScreen : Screens(route = "login_screen")
+    object RegistrationScreen : Screens(route = "registration_screen")
 
 }
