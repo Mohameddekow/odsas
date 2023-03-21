@@ -71,7 +71,7 @@ fun AppointmentsTab(
                                 }
                             }
 
-                            Toast.makeText(context, "Upcoming appo", Toast.LENGTH_SHORT).show()
+                            //Toast.makeText(context, "Upcoming appo", Toast.LENGTH_SHORT).show()
                         }
                         1 -> {
                             if (navController.currentDestination?.route !== Screens.SuccessfulAppointmentScreen.route){
@@ -84,7 +84,7 @@ fun AppointmentsTab(
                                     }
                                 }
                             }
-                            Toast.makeText(context, "Successful appo", Toast.LENGTH_SHORT).show()
+                            //Toast.makeText(context, "Successful appo", Toast.LENGTH_SHORT).show()
 
                         }
                     }

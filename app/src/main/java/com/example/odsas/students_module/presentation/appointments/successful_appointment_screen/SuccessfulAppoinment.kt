@@ -14,11 +14,13 @@ import com.example.odsas.students_module.presentation.home_screen.componets.Scre
 @Composable
 fun SuccessfulAppointmentScreen(navController: NavHostController) {
     Column(
-        modifier = Modifier.padding(vertical = 4.dp, horizontal = 6.dp),
+        modifier = Modifier
+            .padding(vertical = 4.dp, horizontal = 6.dp)
+            .fillMaxSize(),
         verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.Start
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-         ScreenTitleBar(title = "Success screen", navController = navController)
+         ScreenTitleBar(title = "Appointment screen", navController = navController)
 
          AppointmentsTab(
                 navController = navController,
@@ -29,12 +31,13 @@ fun SuccessfulAppointmentScreen(navController: NavHostController) {
                 // modifier = Modifier.align(Alignment.BottomCenter),
                 selectedItemIndex = 1 //none is selected at the start
             )
+        Spacer(modifier = Modifier.height(10.dp))
+
+        SuccessfulAppointmentItem("Sun, Jan 19, 08.00am - 09.00am")
+        Spacer(modifier = Modifier.height(2.dp))
+        SuccessfulAppointmentItem("Tuesday, March 14, 09.30am - 10.00am")
+        Spacer(modifier = Modifier.height(2.dp))
+        SuccessfulAppointmentItem("Friday, March 17, 01.00pm - 02.00pm")
     }
-//    Box(
-//        modifier = Modifier.fillMaxSize(),
-//        contentAlignment = Alignment.Center
-//    ){
-//            Text(text = "Successful appointment Screen", modifier = Modifier)
-//    }
 
 }

@@ -27,15 +27,6 @@ import androidx.compose.ui.unit.dp
 import com.example.odsas.ui.theme.CustomBlue
 import com.example.odsas.ui.theme.CustomWhite
 
-//@Composable
-//fun ProfileScreen(navController: NavHostController) {
-//    Box(
-//        modifier = Modifier.fillMaxSize(),
-//        contentAlignment = Alignment.Center
-//    ){
-//        Text(text = "Profile Screen", modifier = Modifier)
-//    }
-//}
 
     @Composable
             fun ProfileScreen(

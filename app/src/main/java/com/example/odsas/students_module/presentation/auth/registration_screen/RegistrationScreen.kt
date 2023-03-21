@@ -1,5 +1,6 @@
 package com.example.odsas.students_module.presentation.auth.registration_screen
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
@@ -15,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
@@ -22,8 +24,10 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.odsas.R
+import com.example.odsas.commons.USERS_ROOT_REF
 import com.example.odsas.students_module.presentation.home_screen.componets.ScreenTitleBar
 import com.example.odsas.students_module.presentation.screens.Screens
 import com.example.odsas.ui.theme.CustomBlack
@@ -37,10 +41,16 @@ fun RegistrationScreen(
 
 
 
-    Card(elevation = 10.dp, modifier = Modifier.padding(4.dp).fillMaxWidth()) {
+    Card(elevation = 10.dp, modifier = Modifier
+        .padding(4.dp)
+        .fillMaxWidth()) {
 
         ScreenTitleBar("Registration screen", navController )
     }
+
+    val registerViewModel: RegisterViewModel = hiltViewModel()
+    val context = LocalContext.current
+
 
     Column(
         modifier = Modifier.padding(20.dp),
@@ -58,7 +68,7 @@ fun RegistrationScreen(
         Spacer(modifier = Modifier.height(20.dp))
 
         ///user name
-        var userName by remember { mutableStateOf("") }
+        var userEmail by remember { mutableStateOf("") }
 
         OutlinedTextField(
             modifier = Modifier
@@ -66,14 +76,14 @@ fun RegistrationScreen(
                 .fillMaxWidth()
                 .shadow(1.dp, shape = RoundedCornerShape(0.dp)),
 
-            value = userName,
+            value = userEmail,
             onValueChange = {
-                userName = it
+                userEmail = it
             },
             placeholder = {
                 Text(
                     modifier = Modifier,
-                    text = "Reg number",
+                    text = "Email address",
                     color = Color.Black
                 )
             },
@@ -95,7 +105,7 @@ fun RegistrationScreen(
             trailingIcon = {
                 IconButton(
                     onClick = {
-                        userName = ""
+                        userEmail = ""
                     }
                 ) {
                     Icon(
@@ -261,7 +271,25 @@ fun RegistrationScreen(
             .padding(1.dp, 0.dp, 1.dp, 0.dp)
             .fillMaxWidth()) {
             Button(
-                onClick = { },
+                onClick = {
+                    //Toast.makeText(context, "${userName} :::: ${userPassword}", Toast.LENGTH_SHORT).show()
+
+                    registerViewModel.registerUser(userEmail, userPassword, USERS_ROOT_REF)
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful){
+                                Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
+
+                                navController.navigate(Screens.HomeScreen.route) {
+                                    popUpTo(Screens.HomeScreen.route) {
+                                        inclusive = true
+                                    }
+                                }
+                            }else{
+                                Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show()
+
+                            }
+                        }
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp) ,

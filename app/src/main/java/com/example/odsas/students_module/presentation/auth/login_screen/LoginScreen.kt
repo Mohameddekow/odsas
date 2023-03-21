@@ -1,6 +1,7 @@
 package com.example.odsas.students_module.presentation.auth.login_screen
 
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -18,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
@@ -28,12 +30,15 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.odsas.students_module.presentation.home_screen.componets.ScreenTitleBar
 import com.example.odsas.students_module.presentation.screens.Screens
 import com.example.odsas.ui.theme.CustomBlack
 import com.example.odsas.ui.theme.CustomBlue
 import com.example.odsas.ui.theme.CustomWhite
+import com.google.firebase.auth.FirebaseAuth
+import javax.inject.Inject
 
 
 @Composable
@@ -43,6 +48,16 @@ fun LoginScreen(navController: NavHostController) {
 
         ScreenTitleBar("Login screen", navController )
     }
+
+    //the dependencies
+    var loginViewModel: LoginViewModel = hiltViewModel()
+    val context = LocalContext.current
+
+//    @Inject
+//    lateinit var auth: FirebaseAuth
+
+
+
     Column(
         modifier = Modifier.padding(20.dp),
         verticalArrangement = Arrangement.Center,
@@ -59,7 +74,7 @@ fun LoginScreen(navController: NavHostController) {
         Spacer(modifier = Modifier.height(20.dp))
 
         ///user name
-        var userName by remember { mutableStateOf("")}
+        var userEmail by remember { mutableStateOf("")}
 
         OutlinedTextField(
             modifier = Modifier
@@ -67,14 +82,14 @@ fun LoginScreen(navController: NavHostController) {
                 .fillMaxWidth()
                 .shadow(1.dp, shape = RoundedCornerShape(0.dp)),
 
-            value = userName,
+            value = userEmail,
             onValueChange = {
-                userName = it
+                userEmail = it
             },
             placeholder = {
                 Text(
                     modifier = Modifier,
-                    text = "Reg number",
+                    text = "Email address",
                     color = Color.Black
                 )
             },
@@ -96,7 +111,7 @@ fun LoginScreen(navController: NavHostController) {
             trailingIcon = {
                 IconButton(
                     onClick = {
-                        userName = ""
+                        userEmail = ""
                     }
                 ) {
                     Icon(
@@ -196,7 +211,30 @@ fun LoginScreen(navController: NavHostController) {
             .padding(1.dp, 0.dp, 1.dp, 0.dp)
             .fillMaxWidth()) {
             Button(
-                onClick = { },
+                onClick = {
+
+
+                    //authenticating user through mvvm and navigate to home fragment after successful auth
+                    loginViewModel.authenticateUser(userEmail, userPassword)
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                //check if the user verified his email only then log him  in
+                                //val currentUser = auth.currentUser!!
+
+                                Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
+
+                                navController.navigate(Screens.HomeScreen.route) {
+                                    popUpTo(Screens.HomeScreen.route) {
+                                        inclusive = true
+                                    }
+                                }
+
+                            } else {
+                                Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show()
+
+                            }
+                        }
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp) ,

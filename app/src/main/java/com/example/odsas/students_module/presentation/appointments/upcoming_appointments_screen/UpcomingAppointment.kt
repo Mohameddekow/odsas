@@ -9,16 +9,20 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.odsas.students_module.domain.model.AppointmentsTabItemModel
 import com.example.odsas.students_module.presentation.appointments.components.AppointmentsTab
+import com.example.odsas.students_module.presentation.appointments.successful_appointment_screen.SuccessfulAppointmentItem
 import com.example.odsas.students_module.presentation.home_screen.componets.ScreenTitleBar
 
 @Composable
 fun UpcomingAppointmentScreen(navController: NavHostController) {
+
     Column(
-        modifier = Modifier.padding(vertical = 4.dp, horizontal = 6.dp),
+        modifier = Modifier
+            .padding(vertical = 4.dp, horizontal = 6.dp)
+            .fillMaxSize(),
         verticalArrangement = Arrangement.Top,
-        horizontalAlignment = Alignment.Start
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        ScreenTitleBar(title = "Upcoming screen", navController = navController)
+        ScreenTitleBar(title = "Appointment screen", navController = navController)
 
         AppointmentsTab(
             navController = navController,
@@ -29,6 +33,11 @@ fun UpcomingAppointmentScreen(navController: NavHostController) {
             // modifier = Modifier.align(Alignment.BottomCenter),
             selectedItemIndex = 0 //none is selected at the start
         )
+        Spacer(modifier = Modifier.height(10.dp))
+
+        UpcomingAppointmentItem("2 days", "Sun, Jan 19, 08.00am - 09.00am")
+        Spacer(modifier = Modifier.height(2.dp))
+        UpcomingAppointmentItem("4 days", "Tuesday, March 14, 09.30am - 10.00am")
     }
 
 //    Box(
@@ -38,3 +47,4 @@ fun UpcomingAppointmentScreen(navController: NavHostController) {
 //        Text(text = "Upcoming appointment Screen", modifier = Modifier)
 //    }
 }
+

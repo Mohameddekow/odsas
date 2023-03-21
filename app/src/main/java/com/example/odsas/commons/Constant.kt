@@ -1,0 +1,6 @@
+package com.example.odsas.commons
+const val USERS_ROOT_REF = "users"
+const val PROFILE_IMAGES_ROOT_REF = "profileImages"
+const val PICK_IMAGE_CODE = 1234
+
+const val TASK_ROOT_REF = "tasks"

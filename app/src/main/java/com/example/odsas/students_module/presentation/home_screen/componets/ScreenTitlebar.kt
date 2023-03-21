@@ -2,6 +2,7 @@ package com.example.odsas.students_module.presentation.home_screen.componets
 
 import android.icu.text.CaseMap.Title
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
@@ -21,7 +22,7 @@ import com.example.odsas.students_module.presentation.screens.Screens
 @Composable
 fun ScreenTitleBar(title: String, navController: NavHostController) {
     Row(
-        modifier = Modifier.padding(4.dp),
+        modifier = Modifier.padding(4.dp).fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
         IconButton(
