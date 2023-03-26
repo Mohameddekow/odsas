@@ -1,7 +1,10 @@
 package com.example.odsas.students_module.presentation.book_appointment_screen
 
 import android.app.DatePickerDialog
+import android.app.TimePickerDialog
+import android.os.Build
 import android.widget.DatePicker
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -29,9 +32,13 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.toSize
 import com.example.odsas.R
 import com.example.odsas.students_module.domain.model.DropDownItemsModel
+import com.example.odsas.students_module.presentation.home_screen.componets.ScreenTitleBar
 import com.example.odsas.ui.theme.CustomBlue
 import com.example.odsas.ui.theme.CustomWhite
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.*
+
 
 @Composable
 fun BookingContent() {
@@ -89,7 +96,9 @@ fun BookingContent() {
             label = {Text("Reason for appointment")},
             trailingIcon = {
                 Icon(icon,"contentDescription",
-                    Modifier.clickable { mExpanded = !mExpanded }.size(40.dp), tint = CustomBlue)
+                    Modifier
+                        .clickable { mExpanded = !mExpanded }
+                        .size(40.dp), tint = CustomBlue)
             },
         )
 
@@ -131,6 +140,16 @@ fun BookingContent() {
     // Initializing a Calendar
     val mCalendar = Calendar.getInstance()
 
+//    DATE_FORMAT_7 = EEE, MMM d, ''yy
+//    The output will be -: Wed, Dec 5, '18
+//    val firstApiFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")// HH:mm:ss")
+//    var y = ""
+//    var m = ""
+//    var d =""
+//    val date = LocalDate.parse("$y-$m-$d 09:00:00",firstApiFormat)//"2019-08-07 09:00:00" , firstApiFormat)
+
+
+
     // Fetching current year, month and day
     mYear = mCalendar.get(Calendar.YEAR)
     mMonth = mCalendar.get(Calendar.MONTH)
@@ -147,64 +166,185 @@ fun BookingContent() {
     val mDatePickerDialog = DatePickerDialog(
         mContext,
         { _: DatePicker, mYear: Int, mMonth: Int, mDayOfMonth: Int ->
+
+           // y = mYear.toString(); m = mMonth.toString(); d = mDate.toString()
+
             mDate.value = "$mDayOfMonth/${mMonth+1}/$mYear"
+
         }, mYear, mMonth, mDay
     )
 
 
-    Card(elevation = 5.dp, modifier = Modifier
-        .padding(horizontal = 4.dp, vertical = 4.dp)
-        .fillMaxWidth()
-        .clickable {
-            mDatePickerDialog.show()
-
-        }) {
-        Row(
-            modifier = Modifier.padding(4.dp),
-            verticalAlignment = Alignment.CenterVertically
+    //date picker container
+    Card(elevation = 10.dp, modifier = Modifier
+        .padding(4.dp)
+        .fillMaxWidth()) {
+        Column(
+            modifier = Modifier
+                .padding(vertical = 4.dp, horizontal = 1.dp)
+                .fillMaxWidth(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                text ="Please select a date",
-                fontWeight = FontWeight.Bold,
-                fontSize = 20.sp,
-                modifier = Modifier.padding(start = 10.dp, end = 10.dp)
-            )
 
-            IconButton(
-                onClick = { mDatePickerDialog.show() }
+            Card(elevation = 5.dp, modifier = Modifier
+                .padding(horizontal = 4.dp, vertical = 4.dp)
+                .fillMaxWidth()
+                .clickable {
+                    mDatePickerDialog.show()
+
+                }) {
+                Row(
+                    modifier = Modifier.padding(4.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text ="Please select a date",
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 20.sp,
+                        modifier = Modifier.padding(start = 10.dp, end = 10.dp)
+                    )
+
+                    IconButton(
+                        onClick = { mDatePickerDialog.show() }
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.calendar),
+                            contentDescription = "calender",
+                            tint = CustomBlue,
+                            modifier = Modifier
+                                .size(20.dp)
+                                .padding(start = 0.dp)
+                        )
+                    }
+                }
+            }
+
+
+
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.Start
             ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.calendar),
-                    contentDescription = "desc",
-                    tint = CustomBlue,
-                    modifier = Modifier.size(20.dp).padding(start = 0.dp)
+
+                Spacer(modifier = Modifier.size(5.dp))
+
+                Text(
+                    text = "Selected date: ${mDate.value}",
+                    fontSize = 20.sp,
+                    modifier = Modifier.padding(horizontal = 7.dp),
+                    color = CustomBlue
                 )
+
+                // Adding a space of 100dp height
+                Spacer(modifier = Modifier.size(10.dp))
+
+            }
+
+
+        }
+
+    }
+
+//@TODO Calender********  Ends
+
+//@TODO Time Picker********  Start
+    Spacer(modifier = Modifier.height(20.dp))
+
+//    // Fetching local context
+//    val mContext = LocalContext.current
+//
+//    // Declaring and initializing a calendar
+//    val mCalendar = Calendar.getInstance()
+
+    val mHour = mCalendar[Calendar.HOUR_OF_DAY]
+    val mMinute = mCalendar[Calendar.MINUTE]
+
+    // Value for storing time as a string
+    val mTime = remember { mutableStateOf("") }
+
+    // Creating a TimePicker dialog
+    val mTimePickerDialog = TimePickerDialog(
+        mContext,
+        {_, mHour : Int, mMinute: Int ->
+            mTime.value = "$mHour:$mMinute"
+        }, mHour, mMinute, false
+    )
+
+
+    //time container Card
+    Card(elevation = 10.dp, modifier = Modifier
+        .padding(4.dp)
+        .fillMaxWidth()) {
+        Column(
+            modifier = Modifier
+                .padding(vertical = 4.dp, horizontal = 1.dp)
+                .fillMaxWidth(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+
+            Card(elevation = 5.dp, modifier = Modifier
+                .padding(horizontal = 4.dp, vertical = 4.dp)
+                .fillMaxWidth()
+                .clickable {
+                    mTimePickerDialog.show()
+
+                }) {
+                Row(
+                    modifier = Modifier.padding(4.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text ="Please select the time",
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 20.sp,
+                        modifier = Modifier.padding(start = 10.dp, end = 10.dp)
+                    )
+
+                    IconButton(
+                        onClick = { mTimePickerDialog.show() }
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.time_fast),
+                            contentDescription = "calender",
+                            tint = CustomBlue,
+                            modifier = Modifier
+                                .size(20.dp)
+                                .padding(start = 0.dp)
+                        )
+                    }
+                }
+            }
+
+
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.Start
+            ) {
+
+                Spacer(modifier = Modifier.size(5.dp))
+
+                Text(
+                    text = "Selected time: ${mTime.value}",
+                    fontSize = 20.sp,
+                    modifier = Modifier.padding(horizontal = 7.dp),
+                    color = CustomBlue
+                )
+
+                // Adding a space of 100dp height
+                Spacer(modifier = Modifier.size(10.dp))
+
             }
         }
-    }
-
-
-
-    Column(
-        modifier = Modifier.fillMaxWidth(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.Start
-    ) {
-
-        Spacer(modifier = Modifier.size(5.dp))
-
-        Text(
-            text = "Selected date: ${mDate.value}",
-            fontSize = 20.sp,
-            modifier = Modifier.padding(horizontal = 7.dp),
-            color = CustomBlue
-        )
-
-        // Adding a space of 100dp height
-        Spacer(modifier = Modifier.size(10.dp))
 
     }
-//@TODO Calender********  Ends
+
+
+
+//@TODO Time Picker********  Ends
 
 //@TODO Description ********  Start
 
@@ -294,6 +434,5 @@ fun BookingContent() {
     }
 
 //@TODO Description ********  Ends
-
 
 }
