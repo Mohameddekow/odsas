@@ -294,7 +294,7 @@ fun RegistrationScreen(
                     .fillMaxWidth()
                     .height(50.dp) ,
                 colors = ButtonDefaults.buttonColors(CustomBlue),
-                shape = RoundedCornerShape(50.dp)
+                shape = RoundedCornerShape(20.dp)
             ) {
                 Text(text = "Register", color = CustomWhite)
             }

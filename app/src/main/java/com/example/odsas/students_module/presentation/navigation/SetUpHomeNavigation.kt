@@ -23,7 +23,7 @@ fun SetUpHomeNavigation() {
 
     NavHost(
         navController = navController,
-        startDestination = Screens.LoginScreen.route
+        startDestination = Screens.HomeScreen.route
     ) {
 
 

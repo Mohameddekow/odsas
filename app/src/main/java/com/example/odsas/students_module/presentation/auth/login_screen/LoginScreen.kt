@@ -239,7 +239,7 @@ fun LoginScreen(navController: NavHostController) {
                     .fillMaxWidth()
                     .height(50.dp) ,
                 colors = ButtonDefaults.buttonColors(CustomBlue),
-                shape = RoundedCornerShape(50.dp)
+                shape = RoundedCornerShape(20.dp)
             ) {
                 Text(text = "Login", color = CustomWhite)
             }
