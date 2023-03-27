@@ -1,10 +1,12 @@
 package com.example.odsas.students_module.presentation.home_screen
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.odsas.R
 import com.example.odsas.students_module.domain.model.AppointmentsTabItemModel
@@ -17,11 +19,17 @@ import com.example.odsas.students_module.presentation.home_screen.componets.*
 @Composable
 fun HomeScreen(navController: NavHostController) {
 
+    val homeViewModel: HomeViewModel = hiltViewModel()
+
     Box(modifier = Modifier.fillMaxSize(),){
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {
+
+            //Text(text = homeViewModel.bookingListState.value.bookingList.toString())
+
+            println(homeViewModel.bookingListState.value.bookingList.toString())
 
             Spacer(modifier = Modifier.height(10.dp))
             TopBar(navController = navController)

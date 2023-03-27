@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Build
 import android.widget.DatePicker
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -30,18 +31,27 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.unit.toSize
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import com.example.odsas.R
+import com.example.odsas.commons.BOOKING_APPOINTMENT_ROOT_REF
+import com.example.odsas.commons.NOTIFICATION_ROOT_REF
 import com.example.odsas.students_module.domain.model.DropDownItemsModel
 import com.example.odsas.students_module.presentation.home_screen.componets.ScreenTitleBar
+import com.example.odsas.students_module.presentation.notification_screen.NotificationViewModel
+import com.example.odsas.students_module.presentation.screens.Screens
 import com.example.odsas.ui.theme.CustomBlue
 import com.example.odsas.ui.theme.CustomWhite
+import com.google.firebase.auth.FirebaseAuth
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
 
 
 @Composable
-fun BookingContent() {
+fun BookingContent(
+    navController: NavHostController
+) {
     val reasons = listOf<DropDownItemsModel>(
         DropDownItemsModel("Exams"),
         DropDownItemsModel("Fees"),
@@ -50,6 +60,7 @@ fun BookingContent() {
         DropDownItemsModel("Others"),
     )
 
+    val context = LocalContext.current
 
 //@TODO Reason for appointment******** Start
 
@@ -416,12 +427,65 @@ fun BookingContent() {
 
     Spacer(modifier = Modifier.height(20.dp))
 
+    val bookingViewModel: BookingViewModel = hiltViewModel()
+    val notificatiomViewModel: NotificationViewModel = hiltViewModel()
+
+    val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
     Box(modifier = Modifier
         .padding(1.dp, 0.dp, 1.dp, 0.dp)
         .fillMaxWidth()) {
         Button(
             onClick = {
+
+                //book
+                val userId = auth.currentUser?.uid
+                val reason = mSelectedText
+                val date = mDate.value
+                val time = mTime.value
+                val desc = desc
+                val state = bookingViewModel.bookingListState.value
+
+                //val remainderTime = getTime()
+
+                if (userId != null) {
+
+                    //add  Booking
+                    bookingViewModel.addBookingToFireStore(
+                        reason,
+                        date,
+                        time,
+                        desc,
+                        userId,
+                        BOOKING_APPOINTMENT_ROOT_REF
+                    )
+                    //add notification
+                    notificatiomViewModel.addNotificationToFireStore(
+                        date,
+                        time,
+                        userId,
+                        NOTIFICATION_ROOT_REF,
+                        System.currentTimeMillis()
+                    )
+
+                }
+
+
+                Toast.makeText(context, "Booked", Toast.LENGTH_SHORT).show()
+
+                navController.navigate(Screens.HomeScreen.route) {
+                    popUpTo(Screens.HomeScreen.route) {
+                        inclusive = true
+                    }
+                }
+
+
+
+
+
+
+
+
             },
             modifier = Modifier
                 .fillMaxWidth()

@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -24,14 +25,21 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import com.example.odsas.students_module.presentation.screens.Screens
 import com.example.odsas.ui.theme.CustomBlue
 import com.example.odsas.ui.theme.CustomWhite
+import com.google.firebase.auth.FirebaseAuth
 
 
-    @Composable
+@Composable
             fun ProfileScreen(
                 navController: NavHostController,
             ) {
+
+                //logout a user
+                //initialize
+                val auth = FirebaseAuth.getInstance()
+
 
                 Box(
                     modifier = Modifier.fillMaxSize(),
@@ -83,6 +91,15 @@ import com.example.odsas.ui.theme.CustomWhite
                             modifier = Modifier
                                 .align(Alignment.BottomStart)
                                 .padding(bottom = 150.dp)
+                                .clickable {
+                                    auth.signOut()
+
+                                    navController.navigate(Screens.LoginScreen.route) {
+                                        popUpTo(Screens.LoginScreen.route) {
+                                            inclusive = true
+                                        }
+                                    }
+                                }
                         )
                     }
 

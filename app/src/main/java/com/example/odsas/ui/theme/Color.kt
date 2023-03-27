@@ -15,6 +15,22 @@ val LightGreyBg = Color(0xDCD9D9D9)
 val CustomBlue = Color(0xFF004AAD)
 
 
+
+val darkGray = Color(0xFF1a1717)
+val darkBlue = Color(0xFF18192b)
+val white = Color(0xFFF3F3F3)
+val gray = Color(0xFF3F3F3F)
+val orange = Color(0xFFdb660d)
+val blueGray = Color(0xFF404352)
+val nightDark = Color(0xFF403757)
+
+val purple = Color(0xFF9b11ba)
+
+val redOrange = Color(0xFFe84a23)
+val green = Color(0xFF0ddb25)
+val blue = Color(0xFF140ddb)
+val brightBlue = Color(0xFF027cf5)
+
 /* initial default colors
 val Purple200 = Color(0xFFBB86FC)
 val Purple500 = Color(0xFF6200EE)

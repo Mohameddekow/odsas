@@ -57,7 +57,7 @@ fun BookAppointmentScreen(navController: NavHostController) {
 
             Spacer(modifier = Modifier.height(90.dp))
 
-            BookingContent()
+            BookingContent(navController)
 
         }
 

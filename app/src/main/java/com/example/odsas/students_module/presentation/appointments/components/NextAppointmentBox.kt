@@ -25,10 +25,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.odsas.R
+import com.example.odsas.students_module.presentation.home_screen.HomeViewModel
 import com.example.odsas.students_module.presentation.screens.Screens
 import com.example.odsas.ui.theme.CustomBlack
 import com.example.odsas.ui.theme.CustomBlue
@@ -38,6 +40,9 @@ import com.example.odsas.ui.theme.CustomWhite
 @Composable
 fun NextAppointmentBox(navController: NavHostController) {
 
+    val homeViewModel: HomeViewModel = hiltViewModel()
+
+    val state = homeViewModel.bookingListState.value.bookingList?.get(0)
     Card(
         elevation = 15.dp,
         modifier = Modifier
@@ -195,7 +200,8 @@ fun NextAppointmentBox(navController: NavHostController) {
 //                tint = Color.White,
                                 )
                             }
-                            Text(text = "Sun, Jan 19, 08.00am - 09.00am")
+                            //Text(text = "Sun, Jan 19, 08.00am - 09.00am")
+                            Text(text  = "${state?.date}     ${state?.time}")
                         }
                     }
                 }
