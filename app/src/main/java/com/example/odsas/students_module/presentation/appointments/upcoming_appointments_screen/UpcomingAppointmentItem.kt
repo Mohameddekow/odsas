@@ -102,18 +102,18 @@ fun UpcomingAppointmentItem(countDown: String, time: String) {
 
 
                         //count down timer
-                        Box(modifier = Modifier
-                            .clip(RoundedCornerShape(5.dp))
-                            .background(CustomBlue.copy(0.4f))
-                            //.size(30.dp)
-                        )
-                        {
-                            Text(
-                                text = countDown,//"2 days",
-                                modifier = Modifier.padding(4.dp),
-                                color = CustomBlack
-                            )
-                        }
+//                        Box(modifier = Modifier
+//                            .clip(RoundedCornerShape(5.dp))
+//                            .background(CustomBlue.copy(0.4f))
+//                            //.size(30.dp)
+//                        )
+//                        {
+//                            Text(
+//                                text = countDown,//"2 days",
+//                                modifier = Modifier.padding(4.dp),
+//                                color = CustomBlack
+//                            )
+//                        }
 
                     }//end of first row
 

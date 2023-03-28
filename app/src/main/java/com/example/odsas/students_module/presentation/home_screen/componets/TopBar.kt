@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,10 +41,10 @@ fun TopBar(
 
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
-                .data(R.drawable.mohamed) //profile image
+                .data(R.drawable.per) //profile image
                 .crossfade(true)
                 .build(),
-            placeholder = painterResource(R.drawable.mohamed),
+            placeholder = painterResource(R.drawable.per),
             contentDescription = "image",
             modifier = Modifier
                 .size(44.dp)

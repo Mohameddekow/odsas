@@ -71,7 +71,7 @@ constructor(
         try {
 
             val snapshots = fireStoreDb.collection(notificationRootRef).document(userId).collection(userId)
-                .orderBy("date", Query.Direction.DESCENDING)
+                .orderBy("currentTimeMillis", Query.Direction.DESCENDING)
                 .get()
                 .await()
 

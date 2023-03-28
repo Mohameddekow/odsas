@@ -22,6 +22,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -42,7 +43,8 @@ fun NextAppointmentBox(navController: NavHostController) {
 
     val homeViewModel: HomeViewModel = hiltViewModel()
 
-    val state = homeViewModel.bookingListState.value.bookingList?.get(0)
+    val state = homeViewModel.bookingListState.value.bookingList
+
     Card(
         elevation = 15.dp,
         modifier = Modifier
@@ -52,7 +54,9 @@ fun NextAppointmentBox(navController: NavHostController) {
     ) {
         Column(modifier = Modifier, horizontalAlignment = Alignment.CenterHorizontally) {
             Row(
-                modifier = Modifier.fillMaxWidth(0.93f).padding(vertical = 15.dp),
+                modifier = Modifier
+                    .fillMaxWidth(0.93f)
+                    .padding(vertical = 15.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -67,157 +71,177 @@ fun NextAppointmentBox(navController: NavHostController) {
                     text = "View all",
                     modifier = Modifier
                         .clip(RoundedCornerShape(8.dp))
-                            .clickable {
-                                //click event
-                                navController.navigate(Screens.UpcomingAppointmentScreen.route) {
-                                    popUpTo(Screens.UpcomingAppointmentScreen.route) {
-                                        inclusive = true
-                                    }
+                        .clickable {
+                            //click event
+                            navController.navigate(Screens.UpcomingAppointmentScreen.route) {
+                                popUpTo(Screens.UpcomingAppointmentScreen.route) {
+                                    inclusive = true
                                 }
                             }
-                         .padding(4.dp),
+                        }
+                        .padding(4.dp),
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                     color = CustomBlue
                 )
             }
 
-            //content box
-            Box(
-                modifier = Modifier
-                    .clip(RoundedCornerShape(10.dp))
-                    .shadow(
-                        elevation = 30.dp,
-                        shape = RoundedCornerShape(2.dp)
-                    )
-                    .background(CustomBlue)
-                    .padding(10.dp)
-                    //.fillMaxWidth(0.95f)
-            ) {
+            if (state?.size == 0){
+                Box(modifier = Modifier.padding(4.dp), contentAlignment = Alignment.Center) {
+                    Text(text = "You have no upcoming appointments",modifier = Modifier.padding(vertical = 10.dp), fontSize = 20.sp, textAlign = TextAlign.Center)
+                }
+            }else{
 
-                Column(
-                    modifier = Modifier.padding(top = 4.dp, bottom = 10.dp, end = 10.dp, start = 10.dp),
-                    horizontalAlignment = Alignment.Start,
-                    verticalArrangement = Arrangement.Center
+                //if there are appointment show it
+                //content box
+                Box(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(10.dp))
+                        .shadow(
+                            elevation = 30.dp,
+                            shape = RoundedCornerShape(2.dp)
+                        )
+                        .background(CustomBlue)
+                        .padding(10.dp)
+                    //.fillMaxWidth(0.95f)
                 ) {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 4.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
+
+                    Column(
+                        modifier = Modifier.padding(top = 4.dp, bottom = 10.dp, end = 10.dp, start = 10.dp),
+                        horizontalAlignment = Alignment.Start,
+                        verticalArrangement = Arrangement.Center
                     ) {
                         Row(
                             modifier = Modifier
-                                //.fillMaxWidth()
-                                .padding(3.dp),
-                            horizontalArrangement = Arrangement.Start,
-                            verticalAlignment = Alignment.Top
+                                .fillMaxWidth()
+                                .padding(vertical = 4.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
-
-                            AsyncImage(
-                                model = ImageRequest.Builder(LocalContext.current)
-                                    .data(null) //profile image
-                                    .crossfade(true)
-                                    .build(),
-                                placeholder = painterResource(R.drawable.dr_mutua),
-                                contentDescription = "image",
+                            Row(
                                 modifier = Modifier
-                                    .size(70.dp)
-                                    .alpha(1f)
-                                    .clip(RoundedCornerShape(10.dp)),
-                                contentScale = ContentScale.Crop,
-                                fallback = painterResource(id = R.drawable.dr_mutua)
-                            )
-
-                            Column(
-                                modifier = Modifier.padding(start = 10.dp, top = 3.dp),
-                                horizontalAlignment = Alignment.Start,
-                                verticalArrangement = Arrangement.Center
+                                    //.fillMaxWidth()
+                                    .padding(3.dp),
+                                horizontalArrangement = Arrangement.Start,
+                                verticalAlignment = Alignment.Top
                             ) {
-                                Text(
-                                    text = "Dr. Makau Mutua",
-                                    modifier = Modifier.padding(4.dp),
-                                    fontSize = 19.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    color = CustomWhite
+
+                                AsyncImage(
+                                    model = ImageRequest.Builder(LocalContext.current)
+                                        .data(null) //profile image
+                                        .crossfade(true)
+                                        .build(),
+                                    placeholder = painterResource(R.drawable.dr_mutua),
+                                    contentDescription = "image",
+                                    modifier = Modifier
+                                        .size(70.dp)
+                                        .alpha(1f)
+                                        .clip(RoundedCornerShape(10.dp)),
+                                    contentScale = ContentScale.Crop,
+                                    fallback = painterResource(id = R.drawable.dr_mutua)
                                 )
-                                Text(
-                                    text = "Dean, SCI",
-                                    modifier = Modifier.padding(4.dp),
-                                    color = CustomWhite
-                                )
-                            }
 
-                        }//image and personal details box ends
+                                Column(
+                                    modifier = Modifier.padding(start = 10.dp, top = 3.dp),
+                                    horizontalAlignment = Alignment.Start,
+                                    verticalArrangement = Arrangement.Center
+                                ) {
+                                    Text(
+                                        text = "Dr. Makau Mutua",
+                                        modifier = Modifier.padding(4.dp),
+                                        fontSize = 19.sp,
+                                        fontWeight = FontWeight.Bold,
+                                        color = CustomWhite
+                                    )
+                                    Text(
+                                        text = "Dean, SCI",
+                                        modifier = Modifier.padding(4.dp),
+                                        color = CustomWhite
+                                    )
+                                }
+
+                            }//image and personal details box ends
 
 
-                        //count down timer
+                            //count down timer
+//                        Box(modifier = Modifier
+//                            .clip(RoundedCornerShape(5.dp))
+//                            .background(CustomWhite)
+//                            //.size(30.dp)
+//                        )
+//                        {
+//                            Text(
+//                                text = "30 min",
+//                                modifier = Modifier.padding(4.dp),
+//                                color = Color.Black
+//                            )
+//                        }
+
+                        }//end of first row
+
+
+                        Spacer(modifier = Modifier.height(18.dp))
+                        //due date and time box
                         Box(modifier = Modifier
                             .clip(RoundedCornerShape(5.dp))
                             .background(CustomWhite)
-                            //.size(30.dp)
-                        )
-                        {
-                            Text(
-                                text = "30 min",
-                                modifier = Modifier.padding(4.dp),
-                                color = Color.Black
-                            )
-                        }
-
-                    }//end of first row
-
-
-                    Spacer(modifier = Modifier.height(18.dp))
-                    //due date and time box
-                    Box(modifier = Modifier
-                        .clip(RoundedCornerShape(5.dp))
-                        .background(CustomWhite)
-                        .padding(start = 6.dp, end = 6.dp, bottom = 6.dp, top = 6.dp)
-                        .fillMaxWidth()
-                    ) {
-
-                        Row(
-                            modifier = Modifier.padding(start = 10.dp),
-                            horizontalArrangement = Arrangement.Center,
-                            verticalAlignment = Alignment.CenterVertically
+                            .padding(start = 6.dp, end = 6.dp, bottom = 6.dp, top = 6.dp)
+                            .fillMaxWidth()
                         ) {
-                            IconButton(
-                                modifier = Modifier.padding(start = 1.dp, top = 1.dp),
-                                onClick = {
+
+                            Row(
+                                modifier = Modifier.padding(start = 10.dp),
+                                horizontalArrangement = Arrangement.Center,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                IconButton(
+                                    modifier = Modifier.padding(start = 1.dp, top = 1.dp),
+                                    onClick = {
 //                            navController.navigate(Screens.NotificationScreen.route) {
 //                                popUpTo(Screens.NotificationScreen.route) {
 //                                    inclusive = true
 //                                }
 //                            }
-                                }) {
-                                Icon(
-                                    painter = painterResource(id = R.drawable.calendar),
-                                    contentDescription = "calender",
-                                    modifier = Modifier
-                                        .size(28.dp),
+                                    }) {
+                                    Icon(
+                                        painter = painterResource(id = R.drawable.calendar),
+                                        contentDescription = "calender",
+                                        modifier = Modifier
+                                            .size(28.dp),
 //                tint = Color.White,
+                                    )
+                                }
+                                //Text(text = "Sun, Jan 19, 08.00am - 09.00am")
+                                Text(
+                                    text  = if(state?.size == 0)
+                                    {
+                                        "0/0/0000      0:0"
+
+                                    } else if(state?.size != 0){
+                                        "${state?.get(0)?.date}      ${state?.get(0)?.time}"
+                                    }
+                                    else{
+                                        "0/0/0000      00:00"
+                                    }
                                 )
                             }
-                            //Text(text = "Sun, Jan 19, 08.00am - 09.00am")
-                            Text(text  = "${state?.date}     ${state?.time}")
                         }
                     }
+
+
+                    Icon(
+                        painter = painterResource(id = R.drawable.bells),
+                        contentDescription = "notification",
+                        modifier = Modifier
+                            .size(23.dp)
+                            .align(Alignment.TopEnd)
+                            .padding(4.dp),
+                        tint = CustomWhite,
+
+                        )
                 }
-
-
-                Icon(
-                    painter = painterResource(id = R.drawable.bells),
-                    contentDescription = "notification",
-                    modifier = Modifier
-                        .size(23.dp)
-                        .align(Alignment.TopEnd)
-                        .padding(4.dp),
-                    tint = CustomWhite,
-
-                    )
             }
+
         }
 
     }

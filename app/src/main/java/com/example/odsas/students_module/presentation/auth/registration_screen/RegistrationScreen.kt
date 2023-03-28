@@ -58,16 +58,153 @@ fun RegistrationScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        val username = remember { mutableStateOf(TextFieldValue()) }
-        val password = remember { mutableStateOf(TextFieldValue()) }
+//        val username = remember { mutableStateOf(TextFieldValue()) }
+//        val password = remember { mutableStateOf(TextFieldValue()) }
 
-        Spacer(modifier = Modifier.height(150.dp))
+        Spacer(modifier = Modifier.height(70.dp))
 
         Text(text = "Registration", style = TextStyle(fontSize = 40.sp, fontFamily = FontFamily.Cursive))
 
         Spacer(modifier = Modifier.height(20.dp))
 
+//@TODO Time Name text field********  Start
+        Spacer(modifier = Modifier.height(20.dp))
+
         ///user name
+        var userName by remember { mutableStateOf("") }
+
+        OutlinedTextField(
+            modifier = Modifier
+                .padding(vertical = 0.dp, horizontal = 3.dp)
+                .fillMaxWidth()
+                .shadow(1.dp, shape = RoundedCornerShape(0.dp)),
+
+            value = userName,
+            onValueChange = {
+                userName = it
+            },
+            placeholder = {
+                Text(
+                    modifier = Modifier,
+                    text = "User name",
+                    color = Color.Black
+                )
+            },
+            textStyle = TextStyle(
+                fontSize = MaterialTheme.typography.subtitle1.fontSize
+            ),
+            singleLine = true,
+            leadingIcon = {
+                IconButton(
+                    onClick = {}
+                ) {
+                    Icon(
+                        imageVector = Icons.Rounded.Person,
+                        contentDescription = "search icon",
+                        tint = Color.Black
+                    )
+                }
+            } ,
+            trailingIcon = {
+                IconButton(
+                    onClick = {
+                        userName = ""
+                    }
+                ) {
+                    Icon(
+                        imageVector = Icons.Rounded.Close,
+                        contentDescription = "close icon",
+                        tint = Color.Black
+                    )
+                }
+            },
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Next
+            ),
+            keyboardActions = KeyboardActions(
+                onSearch = {
+                    //search a user
+//                navController.navigate(
+//                    (Screens.UserDetailsScreen.route + "/$userName")
+//                )
+                }
+            )
+
+        )
+//@TODO Time Name text field********  Ends
+
+
+//@TODO Time Reg num text field********  Start
+        Spacer(modifier = Modifier.height(20.dp))
+
+        ///user name
+        var regNum by remember { mutableStateOf("") }
+
+        OutlinedTextField(
+            modifier = Modifier
+                .padding(vertical = 0.dp, horizontal = 3.dp)
+                .fillMaxWidth()
+                .shadow(1.dp, shape = RoundedCornerShape(0.dp)),
+
+            value = regNum,
+            onValueChange = {
+                regNum = it
+            },
+            placeholder = {
+                Text(
+                    modifier = Modifier,
+                    text = "Reg number",
+                    color = Color.Black
+                )
+            },
+            textStyle = TextStyle(
+                fontSize = MaterialTheme.typography.subtitle1.fontSize
+            ),
+            singleLine = true,
+            leadingIcon = {
+                IconButton(
+                    onClick = {}
+                ) {
+                    Icon(
+                        imageVector = Icons.Rounded.Person,
+                        contentDescription = "search icon",
+                        tint = Color.Black
+                    )
+                }
+            } ,
+            trailingIcon = {
+                IconButton(
+                    onClick = {
+                        regNum = ""
+                    }
+                ) {
+                    Icon(
+                        imageVector = Icons.Rounded.Close,
+                        contentDescription = "close icon",
+                        tint = Color.Black
+                    )
+                }
+            },
+            keyboardOptions = KeyboardOptions(
+                imeAction = ImeAction.Next
+            ),
+            keyboardActions = KeyboardActions(
+                onSearch = {
+                    //search a user
+//                navController.navigate(
+//                    (Screens.UserDetailsScreen.route + "/$userName")
+//                )
+                }
+            )
+
+        )
+//@TODO Time Reg num text field********  Ends
+
+
+//@TODO Time email text field********  Start
+        Spacer(modifier = Modifier.height(20.dp))
+
+        ///user email
         var userEmail by remember { mutableStateOf("") }
 
         OutlinedTextField(
@@ -129,10 +266,15 @@ fun RegistrationScreen(
 
         )
 
+//@TODO Time email text field********  ends
+
+
+//@TODO Time password text field********  Start
+
         Spacer(modifier = Modifier.height(20.dp))
 
-        var userPassword by remember { mutableStateOf("") }
 
+        var userPassword by remember { mutableStateOf("") }
 
         OutlinedTextField(
             modifier = Modifier
@@ -193,6 +335,11 @@ fun RegistrationScreen(
 
         )
 
+//@TODO Time password text field********  Ends
+
+
+
+//@TODO Time confirm password text field********  Start
 
         ///confirm password
         Spacer(modifier = Modifier.height(20.dp))
@@ -235,7 +382,7 @@ fun RegistrationScreen(
             trailingIcon = {
                 IconButton(
                     onClick = {
-                        userPassword = ""
+                        confirmUserPassword = ""
                     }
                 ) {
                     Icon(
@@ -259,11 +406,14 @@ fun RegistrationScreen(
 
         )
 
+ //@TODO Time confirm password text field********  Ends
 
 
 
 
 
+
+//@TODO Time register btn********  Start
 
         Spacer(modifier = Modifier.height(20.dp))
 
@@ -274,21 +424,39 @@ fun RegistrationScreen(
                 onClick = {
                     //Toast.makeText(context, "${userName} :::: ${userPassword}", Toast.LENGTH_SHORT).show()
 
-                    registerViewModel.registerUser(userEmail, userPassword, USERS_ROOT_REF)
-                        .addOnCompleteListener { task ->
-                            if (task.isSuccessful){
-                                Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
+                    if (userName != "" && userEmail != "" && userPassword != "" && confirmUserPassword.isNotBlank() ){
 
-                                navController.navigate(Screens.HomeScreen.route) {
-                                    popUpTo(Screens.HomeScreen.route) {
-                                        inclusive = true
+                        if (userPassword != confirmUserPassword){
+                            Toast.makeText(context, "passwords aren't matching", Toast.LENGTH_SHORT).show()
+                        }else{
+
+                            registerViewModel.registerUser(
+                                userName,
+                                regNum,
+                                userEmail,
+                                userPassword,
+                                USERS_ROOT_REF
+                            )
+                                .addOnCompleteListener { task ->
+                                    if (task.isSuccessful){
+                                        Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
+
+                                        navController.navigate(Screens.LoginScreen.route) {
+                                            popUpTo(Screens.LoginScreen.route) {
+                                                inclusive = true
+                                            }
+                                        }
+                                    }else{
+                                        Toast.makeText(context, "Failed: ${task.exception?.message.toString()}", Toast.LENGTH_SHORT).show()
+
                                     }
                                 }
-                            }else{
-                                Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show()
-
-                            }
                         }
+
+                    }else{
+                        Toast.makeText(context, "All fields are required", Toast.LENGTH_SHORT).show()
+                    }
+
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -300,6 +468,7 @@ fun RegistrationScreen(
             }
         }
 
+//@TODO Time register btn********  ends
 
         Spacer(modifier = Modifier.height(20.dp))
 

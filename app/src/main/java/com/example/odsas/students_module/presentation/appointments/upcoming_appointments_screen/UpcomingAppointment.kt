@@ -67,7 +67,7 @@ fun AllUpcomingApp(
 
     Box(
         modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.TopCenter
     ) {
 
         LazyColumn(
@@ -100,7 +100,7 @@ fun AllUpcomingApp(
 
         //load shimmer
         if (state.isLoading) {
-            CircularProgressIndicator()
+            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
         }
     }
 

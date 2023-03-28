@@ -18,6 +18,7 @@ import com.example.odsas.students_module.presentation.appointments.upcoming_appo
 import com.example.odsas.students_module.presentation.auth.login_screen.LoginScreen
 import com.example.odsas.students_module.presentation.auth.registration_screen.RegistrationScreen
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun SetUpHomeNavigation() {
 

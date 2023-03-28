@@ -17,11 +17,13 @@ class RegisterViewModel @Inject constructor(
     var firestoreRegState : MutableLiveData<String> = repository._firestoreRegState
 
     fun registerUser(
+        userName: String,
+        regNum: String,
         userEmail: String,
         userPassword: String,
         usersRootRef: String,
     ): Task<AuthResult> {
-        return repository.registerUser(userEmail, userPassword, usersRootRef)
+        return repository.registerUser(userName, regNum, userEmail, userPassword, usersRootRef)
     }
 
 

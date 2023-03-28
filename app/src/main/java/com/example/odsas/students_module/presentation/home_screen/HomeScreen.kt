@@ -1,7 +1,9 @@
 package com.example.odsas.students_module.presentation.home_screen
 
+import android.os.Build
+import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -9,25 +11,31 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.odsas.R
-import com.example.odsas.students_module.domain.model.AppointmentsTabItemModel
+import com.example.odsas.commons.Time
+import com.example.odsas.commons.getTimeDifference
 import com.example.odsas.students_module.domain.model.BottomNavigationMenuItemModel
-import com.example.odsas.students_module.presentation.appointments.components.AppointmentsTab
 import com.example.odsas.students_module.presentation.appointments.components.NextAppointmentBox
 import com.example.odsas.students_module.presentation.home_screen.componets.*
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.LocalTime
+import java.util.*
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun HomeScreen(navController: NavHostController) {
 
     val homeViewModel: HomeViewModel = hiltViewModel()
 
-    Box(modifier = Modifier.fillMaxSize(),){
+
+    Box(modifier = Modifier.fillMaxSize()){
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {
 
-            //Text(text = homeViewModel.bookingListState.value.bookingList.toString())
+            //Text(text = current.toString())
 
             println(homeViewModel.bookingListState.value.bookingList.toString())
 
@@ -62,3 +70,4 @@ fun HomeScreen(navController: NavHostController) {
         )
     }
 }
+

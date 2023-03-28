@@ -213,27 +213,32 @@ fun LoginScreen(navController: NavHostController) {
             Button(
                 onClick = {
 
+                    if (userEmail != "" && userPassword != ""){
+                        //authenticating user through mvvm and navigate to home fragment after successful auth
+                        loginViewModel.authenticateUser(userEmail, userPassword)
+                            .addOnCompleteListener { task ->
+                                if (task.isSuccessful) {
+                                    //check if the user verified his email only then log him  in
+                                    //val currentUser = auth.currentUser!!
 
-                    //authenticating user through mvvm and navigate to home fragment after successful auth
-                    loginViewModel.authenticateUser(userEmail, userPassword)
-                        .addOnCompleteListener { task ->
-                            if (task.isSuccessful) {
-                                //check if the user verified his email only then log him  in
-                                //val currentUser = auth.currentUser!!
+                                    Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
 
-                                Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
-
-                                navController.navigate(Screens.HomeScreen.route) {
-                                    popUpTo(Screens.HomeScreen.route) {
-                                        inclusive = true
+                                    navController.navigate(Screens.HomeScreen.route) {
+                                        popUpTo(Screens.HomeScreen.route) {
+                                            inclusive = true
+                                        }
                                     }
+
+                                } else {
+                                    Toast.makeText(context, "Failed: ${task.exception?.message}", Toast.LENGTH_LONG).show()
+
                                 }
-
-                            } else {
-                                Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show()
-
                             }
-                        }
+
+                    }else{
+                        Toast.makeText(context, "All fields are required", Toast.LENGTH_SHORT).show()
+                    }
+
                 },
                 modifier = Modifier
                     .fillMaxWidth()

@@ -1,5 +1,6 @@
 package com.example.odsas.students_module.presentation.profile_screen
 
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Text
@@ -25,6 +26,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.odsas.students_module.domain.model.UserModel
 import com.example.odsas.students_module.presentation.screens.Screens
 import com.example.odsas.ui.theme.CustomBlue
 import com.example.odsas.ui.theme.CustomWhite
@@ -32,133 +35,91 @@ import com.google.firebase.auth.FirebaseAuth
 
 
 @Composable
-            fun ProfileScreen(
-                navController: NavHostController,
+fun ProfileScreen(
+    navController: NavHostController,
+) {
+
+    //logout a user
+    //initialize
+    val auth = FirebaseAuth.getInstance()
+
+    val profileViewModel: ProfileViewModel = hiltViewModel()
+    val state = profileViewModel.userState.value.user
+
+    Log.d("prof", state?.userEmail.toString())
+
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+
+        //profile navigation box
+        Box(
+            modifier = Modifier
+                .background(color = CustomWhite)
+                .fillMaxSize()
+        ) {
+            Column(
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.Start,
             ) {
 
-                //logout a user
-                //initialize
-                val auth = FirebaseAuth.getInstance()
+                //user profile
+                ProfileItem(navController = navController, state)
 
 
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-
-                    //profile navigation box
-                    Box(
-                        modifier = Modifier
-                            .background(color = CustomWhite)
-                            .fillMaxSize()
-                    ) {
-                        Column(
-                            verticalArrangement = Arrangement.Center,
-                            horizontalAlignment = Alignment.Start,
-                        ) {
-
-                            //user profile
-                            ProfileItem(navController = navController)
-
-
-                            RowItems(
-                                title = "My Location",
-                                icon = R.drawable.loc_marker,
-                                modifier = Modifier
-                            )
-                            RowItems(
-                                title = "Settings",
-                                icon = R.drawable.settings,
-                                modifier = Modifier
-                            )
-                            RowItems(
-                                title = "Help",
-                                icon = R.drawable.help,
-                                modifier = Modifier
-                            )
-                            RowItems(
-                                title = "Support",
-                                icon = R.drawable.support,
-                                modifier = Modifier
-                            )
-
-                        }
-
-                        //sing out row
-                        RowItems(
-                            title = "Signout",
-                            icon = R.drawable.sign_out,
-                            modifier = Modifier
-                                .align(Alignment.BottomStart)
-                                .padding(bottom = 150.dp)
-                                .clickable {
-                                    auth.signOut()
-
-                                    navController.navigate(Screens.LoginScreen.route) {
-                                        popUpTo(Screens.LoginScreen.route) {
-                                            inclusive = true
-                                        }
-                                    }
-                                }
-                        )
-                    }
-
-//                    //place holder box
-//                    Box(
-//                        modifier = Modifier
-//                            .padding(start = 290.dp)
-//                            //.fillMaxSize()
-//                            .clip(RoundedCornerShape(topStart = 20.dp, bottomStart = 20.dp))
-//                            .fillMaxHeight(0.65f)
-//                            .background(Color.Blue)
-//                            .alpha(1f)
-//                    ) {
-//                        Box(
-//                            modifier = Modifier
-//                                .fillMaxSize()
-//                                .background(Color.Gray)
-//                        ) {
-//
-//                        }
-//                    }
-//
-//                    //home screen background box
-//                    Box(
-//                        modifier = Modifier
-//                            .padding(start = 300.dp)
-//                            .clip(RoundedCornerShape(topStart = 20.dp, bottomStart = 20.dp))
-//                            //.fillMaxSize()
-//                            .fillMaxHeight(0.7f)
-////                .clickable(enabled = false, onClickLabel = "hh", null, onClick = {})
-//                            .background(Color.LightGray)
-//                    ) {
-//                        HomeScreen(
-//                            navController = navController,
-//                            sharedNewsDetailsViewModel = sharedNewsDetailsViewModel
-//                        )
-//                    }
-
-
-//                    //profile home button menu
-//                    HomeBottomMenu(
-//                        navController = navController,
-//                        items = listOf(
-//                            HomeBottomMenuItem(title = "home", iconId = R.drawable.ic_icons8_home_48),
-//                            HomeBottomMenuItem(title = "search", iconId = R.drawable.ic_icons8_search_50),
-//                            HomeBottomMenuItem(title = "person", iconId = R.drawable.ic_icons8_contacts_32)
-//                        ),
-//                        modifier = Modifier.align(Alignment.BottomCenter),
-//                        selectedItemIndex = 2
-//                    )
-                }
+                RowItems(
+                    title = "My Location",
+                    icon = R.drawable.loc_marker,
+                    modifier = Modifier
+                )
+                RowItems(
+                    title = "Settings",
+                    icon = R.drawable.settings,
+                    modifier = Modifier
+                )
+                RowItems(
+                    title = "Help",
+                    icon = R.drawable.help,
+                    modifier = Modifier
+                )
+                RowItems(
+                    title = "Support",
+                    icon = R.drawable.support,
+                    modifier = Modifier
+                )
 
             }
 
+            //sing out row
+            RowItems(
+                title = "Signout",
+                icon = R.drawable.sign_out,
+                modifier = Modifier
+                    .align(Alignment.BottomStart)
+                    .padding(bottom = 150.dp)
+                    .clickable {
+                        auth.signOut()
 
-    @Composable
-    fun ProfileItem(
-        navController: NavHostController
-    ) {
+                        navController.navigate(Screens.LoginScreen.route) {
+                            popUpTo(Screens.LoginScreen.route) {
+                                inclusive = true
+                            }
+                        }
+                    }
+            )
+        }
+
+    }
+
+}
+
+
+@Composable
+fun ProfileItem(
+    navController: NavHostController,
+    user: UserModel?
+) {
 
         Row(
             modifier = Modifier
@@ -175,7 +136,7 @@ import com.google.firebase.auth.FirebaseAuth
 
 
                 Image(
-                    painter = painterResource(id = R.drawable.mohamed),
+                    painter = painterResource(id = R.drawable.per),
                     contentDescription = "profile image",
                     modifier = Modifier
                         .clip(RoundedCornerShape(50))
@@ -191,7 +152,7 @@ import com.google.firebase.auth.FirebaseAuth
                 ) {
 
                     Text(
-                        text = "Mohamed Dekow",
+                        text = user?.userName ?: "Mohamed Dekow",
                         modifier = Modifier.padding(top = 3.dp),
                         fontWeight = FontWeight.Bold,
                         maxLines = 3,
@@ -199,7 +160,7 @@ import com.google.firebase.auth.FirebaseAuth
                     )
 
                     Text(
-                        text = "mohadekow@gmail.com", modifier = Modifier
+                        text = user?.userEmail ?: "mohadekow@gmail.com", modifier = Modifier
                             .alpha(0.8f)
                             .padding(end = 20.dp)
                     )
@@ -225,25 +186,25 @@ import com.google.firebase.auth.FirebaseAuth
 
     }
 
-    @Composable
-    fun RowItems(
-        icon: Int,
-        title: String,
-        modifier: Modifier
-    ) {
-        Row(
-            modifier = modifier
-                .padding(start = 20.dp, bottom = 15.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center,
+@Composable
+fun RowItems(
+    icon: Int,
+    title: String,
+    modifier: Modifier
+) {
+    Row(
+        modifier = modifier
+            .padding(start = 20.dp, bottom = 15.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center,
 
-            ) {
-            Icon(
-                painter = painterResource(id = icon),
-                contentDescription = "location",
-                Modifier.size(25.dp)
-            )
-            Text(text = title, modifier = Modifier.padding(start = 10.dp))
-        }
+        ) {
+        Icon(
+            painter = painterResource(id = icon),
+            contentDescription = "location",
+            Modifier.size(25.dp)
+        )
+        Text(text = title, modifier = Modifier.padding(start = 10.dp))
     }
+}
 

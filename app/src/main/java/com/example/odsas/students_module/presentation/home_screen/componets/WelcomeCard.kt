@@ -9,9 +9,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.odsas.students_module.presentation.profile_screen.ProfileViewModel
 
 @Composable
 fun WelcomeCard() {
+    val profileViewModel: ProfileViewModel = hiltViewModel()
+    val state = profileViewModel.userState.value.user
+
     Card(
         elevation = 10.dp,
         modifier = Modifier
@@ -28,7 +33,7 @@ fun WelcomeCard() {
 
                 Spacer(modifier = Modifier.height(15.dp))
 
-                Text(text = "Welcome back, Moha", fontSize = 24.sp, fontWeight = FontWeight.Bold)
+                Text(text = "Welcome back, ${state?.userName}", fontSize = 24.sp, fontWeight = FontWeight.Bold)
 
                 Spacer(modifier = Modifier.height(15.dp))
 
