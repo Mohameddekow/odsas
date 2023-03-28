@@ -88,7 +88,7 @@ fun NextAppointmentBox(navController: NavHostController) {
 
             if (state?.size == 0){
                 Box(modifier = Modifier.padding(4.dp), contentAlignment = Alignment.Center) {
-                    Text(text = "You have no upcoming appointments!",modifier = Modifier.padding(vertical = 10.dp), fontSize = 20.sp, textAlign = TextAlign.Center)
+                    Text(text = "You have no upcoming appointments!!",modifier = Modifier.padding(vertical = 10.dp), fontSize = 20.sp, textAlign = TextAlign.Center)
                 }
             }else{
 
