@@ -1,4 +1,4 @@
-package com.example.odsas.students_module.presentation.appointments.upcoming_appointments_screen
+package com.example.odsas.students_module.presentation.appointments.successful_appointment_screen
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
@@ -18,7 +18,7 @@ import java.lang.Exception
 import javax.inject.Inject
 
 
-class UpcomingRepository
+class SuccessfulRepository
 @Inject
 constructor(
     private val fireStoreDb: FirebaseFirestore
@@ -38,8 +38,8 @@ constructor(
         try {
 
             val snapshots = fireStoreDb.collection(bookingRootRef).document(userId).collection(userId)
-                .orderBy("date", Query.Direction.ASCENDING)//order by date
-                .whereGreaterThan("date", currentDate)//show booking b4 today
+                .orderBy("date", Query.Direction.DESCENDING)//order by date
+                .whereLessThan("date", currentDate)//show booking b4 today
 //                .orderBy("time", Query.Direction.ASCENDING)//order by time
 //                .whereLessThan("time", currentTime)//show booking b4 this exact time
                 .get()

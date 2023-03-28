@@ -41,7 +41,7 @@ fun UpcomingAppointmentScreen(navController: NavHostController) {
         )
         Spacer(modifier = Modifier.height(10.dp))
 
-        AllUpcomingApp(navController)
+        AllUpcomingAppointments(navController)
 
 //        UpcomingAppointmentItem("2 days", "Sun, Jan 19, 08.00am - 09.00am")
 //        Spacer(modifier = Modifier.height(2.dp))
@@ -57,7 +57,7 @@ fun UpcomingAppointmentScreen(navController: NavHostController) {
 }
 
 @Composable
-fun AllUpcomingApp(
+fun AllUpcomingAppointments(
     navController: NavHostController,
 ) {
 

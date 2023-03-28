@@ -1,4 +1,4 @@
-package com.example.odsas.students_module.presentation.appointments.upcoming_appointments_screen
+package com.example.odsas.students_module.presentation.appointments.successful_appointment_screen
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
@@ -19,11 +19,12 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @HiltViewModel
-class UpcomingViewModel
+class SuccessfulViewModel
 @Inject
 constructor(
-    private val repository: UpcomingRepository
+    private val repository: SuccessfulRepository
 ): ViewModel() {
 
     private val _fetchingTasksState: MutableLiveData<Resource<List<BookingItemModel>>> = MutableLiveData()

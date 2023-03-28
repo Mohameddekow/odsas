@@ -56,54 +56,51 @@ fun AnalysisScreen(navController: NavHostController) {
             horizontalAlignment = Alignment.CenterHorizontally
         ){
             Text(
-                "Analysis of the appointment reasons",
+                "Analysis of appointments",
                 fontSize = 25.sp,
                 fontWeight = FontWeight.Bold,
                 color = white,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.padding(top = 15.dp)
             )
+
+
             Box(
                 modifier = Modifier
-                    .fillMaxSize(0.99f),
+                    .fillMaxSize(),
                 contentAlignment = Center
             ){
                 PieChart(
                     modifier = Modifier
-                        .size(500.dp),
+                        .size(300.dp),
                     input = listOf(
                         PieChartInput(
                             color = brightBlue,
                             value = 29,
-                            description = "Fees"
+                            description = "Exams"
                         ),
                         PieChartInput(
                             color = purple,
                             value = 21,
-                            description = "Exams"
-                        ),
-                        PieChartInput(
-                            color = blueGray,
-                            value = 12,
                             description = "De registration"
                         ),
                         PieChartInput(
-                            color = redOrange,
-                            value = 3,
+                            color = blueGray,
+                            value = 32,
                             description = "Consultation"
+                        ),
+                        PieChartInput(
+                            color = redOrange,
+                            value = 18,
+                            description = "Fees"
                         ),
                         PieChartInput(
                             color = green,
                             value = 12,
                             description = "Others"
                         ),
-//                        PieChartInput(
-//                            color = orange,
-//                            value = 38,
-//                            description = "Kotlin"
-//                        ),
                     ),
-                    centerText = "Reasons for appointments"
+                    centerText = "types of appointments booked"
                 )
             }
         }
@@ -123,13 +120,11 @@ fun AnalysisScreen(navController: NavHostController) {
 
 
 
-
-
 @Composable
 fun PieChart(
     modifier: Modifier = Modifier,
-    radius:Float = 500f,
-    innerRadius:Float = 250f,
+    radius:Float = 300f,
+    innerRadius:Float = 150f,
     transparentWidth:Float = 70f,
     input:List<PieChartInput>,
     centerText:String = ""
@@ -151,7 +146,7 @@ fun PieChart(
     ){
         Canvas(
             modifier = Modifier
-                .fillMaxSize(0.3f)
+                .fillMaxSize()
                 .pointerInput(true){
                     detectTapGestures(
                         onTap = { offset->
@@ -254,7 +249,6 @@ fun PieChart(
                         }
                     }
                 }
-
                 if(pieChartInput.isTapped){
                     val tabRotation = currentStartAngle - angleToDraw - 90f
                     rotate(tabRotation){

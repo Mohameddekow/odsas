@@ -4,6 +4,7 @@ import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
 import java.time.LocalDate
+import java.time.LocalTime
 
 const val NOTIFICATION_ROOT_REF = "notifications"
 const val BOOKING_APPOINTMENT_ROOT_REF = "booking_appointment"
@@ -14,13 +15,22 @@ const val TASK_ROOT_REF = "tasks"
 const val USERS_ROOT_REF = "user_students"
 
 @RequiresApi(Build.VERSION_CODES.O)
-fun getCurrentTime(): String {
+fun getCurrentDate(): String {
     val current = LocalDate.now()
     val y = current.year
     val m = current.monthValue
     val d = current.dayOfMonth
 
-    return "$d-$m-$y"
+    return "$d/$m/$y"
+}
+@RequiresApi(Build.VERSION_CODES.O)
+fun getCurrentTime(): String {
+    val current = LocalTime.now()
+    val h = current.hour
+    val m = current.minute
+    val s = current.second
+
+    return "$h:$m"
 }
 
 
