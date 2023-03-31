@@ -1,9 +1,11 @@
-package com.example.odsas.students_module.presentation.book_appointment_screen
+package com.example.odsas.students_module.presentation.appointments.update_appointments
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.os.Build
 import android.widget.DatePicker
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -36,17 +38,22 @@ import com.example.odsas.commons.BOOKING_APPOINTMENT_ROOT_REF
 import com.example.odsas.commons.NOTIFICATION_ROOT_REF
 import com.example.odsas.commons.convertDateAndTimeToMilliseconds
 import com.example.odsas.students_module.domain.model.DropDownItemsModel
+import com.example.odsas.students_module.presentation.appointments.SharedNewsDetailsViewModel
+import com.example.odsas.students_module.presentation.home_screen.componets.ScreenTitleBar
 import com.example.odsas.students_module.presentation.notification_screen.NotificationViewModel
 import com.example.odsas.students_module.presentation.screens.Screens
 import com.example.odsas.ui.theme.CustomBlue
 import com.example.odsas.ui.theme.CustomWhite
 import com.google.firebase.auth.FirebaseAuth
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 
 @Composable
 fun BookingContent(
-    navController: NavHostController
+    navController: NavHostController,
+    sharedNewsDetailsViewModel: SharedNewsDetailsViewModel
 ) {
     val reasons = listOf<DropDownItemsModel>(
         DropDownItemsModel("Exams"),
@@ -55,6 +62,8 @@ fun BookingContent(
         DropDownItemsModel("Consultation"),
         DropDownItemsModel("Others"),
     )
+
+    val bookedAppointmentDetails = sharedNewsDetailsViewModel.bookedAppointmentDetails
 
     val context = LocalContext.current
 
@@ -198,12 +207,6 @@ fun BookingContent(
                 .padding(horizontal = 4.dp, vertical = 4.dp)
                 .fillMaxWidth()
                 .clickable {
-
-                    //disbale already selected dates
-
-
-                    mDatePickerDialog.datePicker.minDate = System.currentTimeMillis()
-                    mDatePickerDialog.datePicker
                     mDatePickerDialog.show()
 
                 }) {
@@ -219,9 +222,7 @@ fun BookingContent(
                     )
 
                     IconButton(
-                        onClick = {
-                            mDatePickerDialog.show()
-                        }
+                        onClick = { mDatePickerDialog.show() }
                     ) {
                         Icon(
                             painter = painterResource(id = R.drawable.calendar),
@@ -431,9 +432,10 @@ fun BookingContent(
 
     Spacer(modifier = Modifier.height(20.dp))
 
-    val bookingViewModel: BookingViewModel = hiltViewModel()
-    val notificatiomViewModel: NotificationViewModel = hiltViewModel()
+//    val bookingViewModel: BookingViewModel = hiltViewModel()
+//    val notificatiomViewModel: NotificationViewModel = hiltViewModel()
 
+    val updateBookedAppointmentViewModel: UpdateBookedAppointmentsViewModel = hiltViewModel()
     val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
     Box(modifier = Modifier
@@ -445,34 +447,31 @@ fun BookingContent(
                 //book
                 val userId = auth.currentUser?.uid
                 val reason = mSelectedText
-                val date = mDate.value //normal date 1/2/2022
-                val dateInMilliseconds = convertDateAndTimeToMilliseconds(mDateAndTime = "${mDate.value} ${mTime.value}") //date in millisocnds
+                val date =  mDate.value //normal date 1/2/2022
+                val dateInMilliseconds = convertDateAndTimeToMilliseconds(mDateAndTime = "${mDate.value} ${mTime.value}") //convert to milliseconds
                 val time = mTime.value
                 val desc = desc
-                val state = bookingViewModel.bookingListState.value
+
+//                val state = bookingViewModel.bookingListState.value
+                val state = updateBookedAppointmentViewModel.updateBookedAppointmentState.value
 
                 //val remainderTime = getTime()
 
                 if (userId != null) {
 
-                    //add  Booking
-                    bookingViewModel.addBookingToFireStore(
-                        reason,
-                        date,
-                        dateInMilliseconds,
-                        time,
-                        desc,
-                        userId,
-                        BOOKING_APPOINTMENT_ROOT_REF
-                    )
-                    //add notification
-                    notificatiomViewModel.addNotificationToFireStore(
-                        date,
-                        time,
-                        userId,
-                        NOTIFICATION_ROOT_REF,
-                        System.currentTimeMillis()
-                    )
+                    //update appointment
+                    bookedAppointmentDetails?.creationTimeMs?.let {
+                        updateBookedAppointmentViewModel.updateAppointment(
+                            reason,
+                            date,
+                            dateInMilliseconds,
+                            time,
+                            desc,
+                            userId,
+                            BOOKING_APPOINTMENT_ROOT_REF,
+                            it
+                        )
+                    }
 
                 }
 

@@ -2,19 +2,17 @@ package com.example.odsas.students_module.presentation.appointments.upcoming_app
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
-import com.example.odsas.commons.Resource
-import com.example.odsas.commons.getCurrentDate
-import com.example.odsas.commons.getCurrentTime
+import com.example.odsas.commons.*
 import com.example.odsas.students_module.domain.model.BookingItemModel
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.tasks.await
-import java.lang.Exception
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.time.LocalTime
+import java.util.*
 import javax.inject.Inject
 
 
@@ -31,17 +29,16 @@ constructor(
     ): Flow<Resource<List<BookingItemModel>>> = flow{
         emit(Resource.Loading(null))
 
-        val currentDate = getCurrentDate()
+        val currentDateInMilliseconds = convertDateAndTimeToMilliseconds(mDateAndTime = "${getCurrentDate()} ${getCurrentTime()}")
         val currentTime = getCurrentTime()
 
-        Log.d("timz", currentTime)
+
+
+
         try {
 
             val snapshots = fireStoreDb.collection(bookingRootRef).document(userId).collection(userId)
-                .orderBy("date", Query.Direction.ASCENDING)//order by date
-                .whereGreaterThan("date", currentDate)//show booking b4 today
-//                .orderBy("time", Query.Direction.ASCENDING)//order by time
-//                .whereLessThan("time", currentTime)//show booking b4 this exact time
+                .whereGreaterThan("dateInMilliseconds", currentDateInMilliseconds.toLong())
                 .get()
                 .await()
 

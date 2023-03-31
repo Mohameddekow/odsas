@@ -14,6 +14,7 @@ import com.example.odsas.R
 import com.example.odsas.commons.Time
 import com.example.odsas.commons.getTimeDifference
 import com.example.odsas.students_module.domain.model.BottomNavigationMenuItemModel
+import com.example.odsas.students_module.presentation.appointments.SharedNewsDetailsViewModel
 import com.example.odsas.students_module.presentation.appointments.components.NextAppointmentBox
 import com.example.odsas.students_module.presentation.home_screen.componets.*
 import java.text.SimpleDateFormat
@@ -24,7 +25,10 @@ import java.util.*
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun HomeScreen(navController: NavHostController) {
+fun HomeScreen(
+    navController: NavHostController,
+    sharedNewsDetailsViewModel: SharedNewsDetailsViewModel
+) {
 
     val homeViewModel: HomeViewModel = hiltViewModel()
 
@@ -49,7 +53,10 @@ fun HomeScreen(navController: NavHostController) {
             ServicesCard(navController = navController)
 
             Spacer(modifier = Modifier.height(20.dp))
-            NextAppointmentBox(navController = navController)
+            NextAppointmentBox(
+                navController = navController,
+                sharedNewsDetailsViewModel = sharedNewsDetailsViewModel
+            )
 
             Spacer(modifier = Modifier.height(10.dp))
 

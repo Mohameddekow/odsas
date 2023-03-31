@@ -1,13 +1,11 @@
 package com.example.odsas.students_module.presentation.appointments.components
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,19 +29,30 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.odsas.R
+import com.example.odsas.commons.BOOKING_APPOINTMENT_ROOT_REF
+import com.example.odsas.students_module.domain.model.BookingItemModel
+import com.example.odsas.students_module.presentation.appointments.SharedNewsDetailsViewModel
+import com.example.odsas.students_module.presentation.appointments.upcoming_appointments_screen.UpcomingViewModel
+import com.example.odsas.students_module.presentation.appointments.update_appointments.UpdateBookedAppointmentsViewModel
 import com.example.odsas.students_module.presentation.home_screen.HomeViewModel
 import com.example.odsas.students_module.presentation.screens.Screens
 import com.example.odsas.ui.theme.CustomBlack
 import com.example.odsas.ui.theme.CustomBlue
 import com.example.odsas.ui.theme.CustomWhite
+import com.google.firebase.auth.FirebaseAuth
 
 
 @Composable
-fun NextAppointmentBox(navController: NavHostController) {
+fun NextAppointmentBox(
+    navController: NavHostController,
+    sharedNewsDetailsViewModel: SharedNewsDetailsViewModel
+) {
 
     val homeViewModel: HomeViewModel = hiltViewModel()
 
     val state = homeViewModel.bookingListState.value.bookingList
+
+    val ctx = LocalContext.current
 
     Card(
         elevation = 15.dp,
@@ -51,6 +60,7 @@ fun NextAppointmentBox(navController: NavHostController) {
 //            .clip(RoundedCornerShape(10.dp))
             .padding(vertical = 1.dp,)
             .fillMaxWidth(0.95f),
+
     ) {
         Column(modifier = Modifier, horizontalAlignment = Alignment.CenterHorizontally) {
             Row(
@@ -101,6 +111,37 @@ fun NextAppointmentBox(navController: NavHostController) {
                             elevation = 30.dp,
                             shape = RoundedCornerShape(2.dp)
                         )
+                        .clickable {
+                            Toast
+                                .makeText(ctx, "navigating....", Toast.LENGTH_LONG)
+                                .show()
+
+
+//                stateZ.updateAppointment(
+//                    creationTimeMs = 1680212322346,
+//                    date = "30/3/2023",
+//                    desc = "nothing ......",
+//                    reason = "Fees",
+//                    time  = "10:30",
+//                    userId = userId!!,
+//                    bookingRootRef = BOOKING_APPOINTMENT_ROOT_REF
+//                )
+                            val appointmentBookedDetails = BookingItemModel(
+                                date = state?.get(0)?.date,
+                                time = state?.get(0)?.time,
+                                reason = state?.get(0)?.reason,
+                                desc = state?.get(0)?.desc,
+                                creationTimeMs = state?.get(0)?.creationTimeMs,
+                            )
+
+                            sharedNewsDetailsViewModel.addBookingAppointmentDetails(appointmentBookedDetails)
+
+                            navController.navigate(Screens.UpdateBookedAppointmentScreen.route) {
+                                popUpTo(Screens.UpdateBookedAppointmentScreen.route) {
+                                    inclusive = true
+                                }
+                            }
+                        }
                         .background(CustomBlue)
                         .padding(10.dp)
                     //.fillMaxWidth(0.95f)

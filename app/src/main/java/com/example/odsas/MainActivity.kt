@@ -15,15 +15,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.navigation.compose.rememberNavController
-import com.example.odsas.students_module.presentation.home_screen.HomeScreen
 import com.example.odsas.students_module.presentation.navigation.SetUpHomeNavigation
 import com.example.odsas.ui.theme.OdsasTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class MainActivity : ComponentActivity() {
+class MainActivity : ComponentActivity(){
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +42,7 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
 }
 
 

@@ -3,8 +3,11 @@ package com.example.odsas.commons
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
+import java.text.ParseException
+import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalTime
+import java.util.*
 
 const val NOTIFICATION_ROOT_REF = "notifications"
 const val BOOKING_APPOINTMENT_ROOT_REF = "booking_appointment"
@@ -14,6 +17,18 @@ const val PICK_IMAGE_CODE = 1234
 const val TASK_ROOT_REF = "tasks"
 const val USERS_ROOT_REF = "user_students"
 
+fun convertDateAndTimeToMilliseconds(mDateAndTime: String,): Long {
+    var date = Date()
+//    val formatter = SimpleDateFormat("dd/MM/yyyy")
+    val formatter = SimpleDateFormat("dd/MM/yyyy HH:mm")
+    try {
+        date = formatter.parse(mDateAndTime)
+    } catch (e: ParseException) {
+        e.printStackTrace()
+    }
+    return date.time;
+}
+
 @RequiresApi(Build.VERSION_CODES.O)
 fun getCurrentDate(): String {
     val current = LocalDate.now()
@@ -21,7 +36,7 @@ fun getCurrentDate(): String {
     val m = current.monthValue
     val d = current.dayOfMonth
 
-    return "$d/$m/$y"
+    return "$d/$m/$y}"
 }
 @RequiresApi(Build.VERSION_CODES.O)
 fun getCurrentTime(): String {

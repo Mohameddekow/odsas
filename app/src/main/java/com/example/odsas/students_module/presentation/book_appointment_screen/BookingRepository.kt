@@ -21,6 +21,7 @@ constructor(
     suspend fun addBookingToFireStore(
         reason: String,
         date: String,
+        dateInMilliseconds: Long,
         time: String,
         desc: String,
         userId: String,
@@ -35,7 +36,7 @@ constructor(
 
             val task = fireStoreDb.collection(bookingRootRef).document(userId).collection(userId) // from taskRet/uid/uid
                 .document() //auto generated document ref
-                .set(BookingItemModel(reason, date, time, desc, System.currentTimeMillis()))
+                .set(BookingItemModel(reason, date,dateInMilliseconds, time, desc, System.currentTimeMillis()))
 
 
             task.addOnSuccessListener {

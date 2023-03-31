@@ -31,13 +31,14 @@ constructor(
     fun addBookingToFireStore(
         reason: String,
         date: String,
+        dateInMilliseconds: Long,
         time: String,
         desc: String,
         userId: String,
         bookingRootRef: String,
     ){
         viewModelScope.launch(Dispatchers.IO){
-            val result = repository.addBookingToFireStore(reason, date, time, desc, userId, bookingRootRef)
+            val result = repository.addBookingToFireStore(reason, date,dateInMilliseconds, time, desc, userId, bookingRootRef)
 
             _bookingListState.value = BookingState(isLoading = true)
             try {
