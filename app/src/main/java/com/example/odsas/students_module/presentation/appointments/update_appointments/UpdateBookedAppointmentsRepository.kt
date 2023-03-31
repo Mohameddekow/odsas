@@ -21,11 +21,6 @@ constructor(
 
     //update user profile name only
     suspend fun updateAppointment(
-//        name: String,
-//        userId: String,
-//        usersPathRef: String,
-
-
         reason: String,
         date: String,
         dateInMilliseconds: Long,
@@ -36,6 +31,7 @@ constructor(
         creationTimeMs: Long
 
     ): Flow<Resource<Void?>> = flow{
+
 
         emit(Resource.Loading(null))
 
@@ -49,22 +45,21 @@ constructor(
                 .collection(userId)
 
             snapshots
-                //.orderBy("creationTimeMs")
                 .whereEqualTo("creationTimeMs" ,creationTimeMs )
                 .get()
                 .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
+                    if (task.isSuccessful) {
 
 
-                    for (document in task.result) {
-//                        val update: MutableMap<String, Any> = HashMap()
-//                        update["x"] = 0
+                        for (document in task.result) {
+    //                        val update: MutableMap<String, Any> = HashMap()
+    //                        update["x"] = 0
 
-                        snapshots.document(document.id)//.set(update, SetOptions.merge())
-                            .set(BookingItemModel(reason,date, dateInMilliseconds, time, desc, System.currentTimeMillis()))
+                            snapshots.document(document.id)//.set(update, SetOptions.merge())
+                                .set(BookingItemModel(reason,date, dateInMilliseconds, time, desc, System.currentTimeMillis()))
 
+                        }
                     }
-                }
             }
 
         }catch (e: Exception){

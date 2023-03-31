@@ -1,6 +1,7 @@
 package com.example.odsas.students_module.presentation.appointments.upcoming_appointments_screen
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
@@ -19,20 +20,36 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.odsas.R
+import com.example.odsas.students_module.presentation.screens.Screens
 import com.example.odsas.ui.theme.CustomBlack
 import com.example.odsas.ui.theme.CustomBlue
 
 @Composable
-fun UpcomingAppointmentItem(countDown: String, time: String) {
+fun UpcomingAppointmentItem(
+    navController: NavHostController,
+    time: String,
+    onItemClick: () -> Unit
+) {
     Card(
         elevation = 15.dp,
         modifier = Modifier
 //            .clip(RoundedCornerShape(10.dp))
             .padding(vertical = 1.dp,)
-            .fillMaxWidth(0.95f),
+            .fillMaxWidth(0.95f)
+            .clickable {
+                    onItemClick()
+
+                    navController.navigate(Screens.UpdateBookedAppointmentScreen.route) {
+                        popUpTo(Screens.UpdateBookedAppointmentScreen.route) {
+                            inclusive = true
+                        }
+                    }
+
+            },
     ) {
         Column(modifier = Modifier, horizontalAlignment = Alignment.CenterHorizontally) {
 
@@ -163,8 +180,8 @@ fun UpcomingAppointmentItem(countDown: String, time: String) {
                         .align(Alignment.TopEnd)
                         .padding(4.dp),
                     tint = CustomBlue,
+                )
 
-                    )
             }
         }
 

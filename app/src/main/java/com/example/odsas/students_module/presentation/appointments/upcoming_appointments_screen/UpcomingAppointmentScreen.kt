@@ -8,18 +8,23 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.odsas.students_module.domain.model.AppointmentsTabItemModel
+import com.example.odsas.students_module.domain.model.BookingItemModel
+import com.example.odsas.students_module.presentation.appointments.SharedNewsDetailsViewModel
 import com.example.odsas.students_module.presentation.appointments.components.AppointmentsTab
-import com.example.odsas.students_module.presentation.appointments.successful_appointment_screen.SuccessfulAppointmentItem
 import com.example.odsas.students_module.presentation.home_screen.componets.ScreenTitleBar
 import com.example.odsas.ui.theme.CustomBlack
 
 @Composable
-fun UpcomingAppointmentScreen(navController: NavHostController) {
+fun UpcomingAppointmentScreen(
+    navController: NavHostController,
+    sharedNewsDetailsViewModel: SharedNewsDetailsViewModel
+) {
 
     Column(
         modifier = Modifier
@@ -41,7 +46,7 @@ fun UpcomingAppointmentScreen(navController: NavHostController) {
         )
         Spacer(modifier = Modifier.height(10.dp))
 
-        AllUpcomingAppointments(navController)
+        AllUpcomingAppointments(navController, sharedNewsDetailsViewModel)
 
 //        UpcomingAppointmentItem("2 days", "Sun, Jan 19, 08.00am - 09.00am")
 //        Spacer(modifier = Modifier.height(2.dp))
@@ -59,6 +64,7 @@ fun UpcomingAppointmentScreen(navController: NavHostController) {
 @Composable
 fun AllUpcomingAppointments(
     navController: NavHostController,
+    sharedNewsDetailsViewModel: SharedNewsDetailsViewModel
 ) {
 
     val upcomingViewModel: UpcomingViewModel = hiltViewModel()
@@ -69,6 +75,8 @@ fun AllUpcomingAppointments(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.TopCenter
     ) {
+        val ctx = LocalContext.current
+
 
         LazyColumn(
             contentPadding = PaddingValues(start = 4.dp, end = 4.dp, top = 15.dp, bottom = 70.dp),
@@ -77,7 +85,24 @@ fun AllUpcomingAppointments(
 
             state.bookingList?.let {
                 items(it){ item ->
-                    UpcomingAppointmentItem(countDown = "30 Min", time = "${item.date}    ${item.time}")
+                    UpcomingAppointmentItem(
+                        navController = navController,
+                        time = "${item.date}    ${item.time}"
+                    ) {
+                       //Toast.makeText(ctx, "${item.date} ${item.creationTimeMs}", Toast.LENGTH_LONG).show()
+
+
+                        val appointmentBookedDetails = BookingItemModel(
+                            date = item.date,
+                            time = item.time,
+                            reason = item.reason,
+                            desc = item.desc,
+                            creationTimeMs = item.creationTimeMs,
+                        )
+
+                        sharedNewsDetailsViewModel.addBookingAppointmentDetails(appointmentBookedDetails)
+
+                    }
 
                 }
             }

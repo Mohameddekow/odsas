@@ -28,11 +28,6 @@ constructor(
 
     //update user profile name only
     fun updateAppointment(
-//        name: String,
-//        userId: String,
-//        usersPathRef: String
-
-
         reason: String,
         date: String,
         dateInMilliseconds: Long,

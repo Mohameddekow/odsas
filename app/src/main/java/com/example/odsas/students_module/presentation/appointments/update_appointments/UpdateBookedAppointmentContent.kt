@@ -37,6 +37,7 @@ import com.example.odsas.R
 import com.example.odsas.commons.BOOKING_APPOINTMENT_ROOT_REF
 import com.example.odsas.commons.NOTIFICATION_ROOT_REF
 import com.example.odsas.commons.convertDateAndTimeToMilliseconds
+import com.example.odsas.commons.getCurrentTime
 import com.example.odsas.students_module.domain.model.DropDownItemsModel
 import com.example.odsas.students_module.presentation.appointments.SharedNewsDetailsViewModel
 import com.example.odsas.students_module.presentation.home_screen.componets.ScreenTitleBar
@@ -50,6 +51,7 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun BookingContent(
     navController: NavHostController,
@@ -280,14 +282,21 @@ fun BookingContent(
     // Value for storing time as a string
     val mTime = remember { mutableStateOf("") }
 
+
+    val currentTime = getCurrentTime()
     // Creating a TimePicker dialog
     val mTimePickerDialog = TimePickerDialog(
         mContext,
         {_, mHour : Int, mMinute: Int ->
-            mTime.value = "$mHour:$mMinute"
+            val selectedTime = "$mHour:$mMinute"
+            if (selectedTime < currentTime){
+                Toast.makeText(context, "Please select upcoming time", Toast.LENGTH_LONG).show()
+
+            }else{
+                mTime.value = "$mHour:$mMinute"
+            }
         }, mHour, mMinute, false
     )
-
 
     //time container Card
     Card(elevation = 10.dp, modifier = Modifier
@@ -462,16 +471,29 @@ fun BookingContent(
                     //update appointment
                     bookedAppointmentDetails?.creationTimeMs?.let {
                         updateBookedAppointmentViewModel.updateAppointment(
-                            reason,
-                            date,
-                            dateInMilliseconds,
-                            time,
-                            desc,
-                            userId,
-                            BOOKING_APPOINTMENT_ROOT_REF,
-                            it
+                            reason = reason,
+                            date = date,
+                            time = time,
+                            desc = desc,
+                            dateInMilliseconds = dateInMilliseconds,
+                            userId = userId,
+                            bookingRootRef = BOOKING_APPOINTMENT_ROOT_REF,
+                            creationTimeMs = it
                         )
                     }
+
+//                    bookedAppointmentDetails?.creationTimeMs?.let {
+//                        updateBookedAppointmentViewModel.updateAppointment(
+//                            reason,
+//                            date,
+//                            dateInMilliseconds,
+//                            time,
+//                            desc,
+//                            userId,
+//                            BOOKING_APPOINTMENT_ROOT_REF,
+//                            it
+//                        )
+//                    }
 
                 }
 

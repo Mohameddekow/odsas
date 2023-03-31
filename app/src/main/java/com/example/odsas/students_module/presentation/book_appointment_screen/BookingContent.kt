@@ -2,8 +2,10 @@ package com.example.odsas.students_module.presentation.book_appointment_screen
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.os.Build
 import android.widget.DatePicker
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -35,6 +37,7 @@ import com.example.odsas.R
 import com.example.odsas.commons.BOOKING_APPOINTMENT_ROOT_REF
 import com.example.odsas.commons.NOTIFICATION_ROOT_REF
 import com.example.odsas.commons.convertDateAndTimeToMilliseconds
+import com.example.odsas.commons.getCurrentTime
 import com.example.odsas.students_module.domain.model.DropDownItemsModel
 import com.example.odsas.students_module.presentation.notification_screen.NotificationViewModel
 import com.example.odsas.students_module.presentation.screens.Screens
@@ -44,6 +47,7 @@ import com.google.firebase.auth.FirebaseAuth
 import java.util.*
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun BookingContent(
     navController: NavHostController
@@ -203,7 +207,7 @@ fun BookingContent(
 
 
                     mDatePickerDialog.datePicker.minDate = System.currentTimeMillis()
-                    mDatePickerDialog.datePicker
+
                     mDatePickerDialog.show()
 
                 }) {
@@ -220,6 +224,8 @@ fun BookingContent(
 
                     IconButton(
                         onClick = {
+                            mDatePickerDialog.datePicker.minDate = System.currentTimeMillis()
+
                             mDatePickerDialog.show()
                         }
                     ) {
@@ -279,11 +285,18 @@ fun BookingContent(
     // Value for storing time as a string
     val mTime = remember { mutableStateOf("") }
 
+    val currentTime = getCurrentTime()
     // Creating a TimePicker dialog
     val mTimePickerDialog = TimePickerDialog(
         mContext,
         {_, mHour : Int, mMinute: Int ->
-            mTime.value = "$mHour:$mMinute"
+            val selectedTime = "$mHour:$mMinute"
+            if (selectedTime < currentTime){
+                Toast.makeText(context, "Please select upcoming time", Toast.LENGTH_LONG).show()
+
+            }else{
+                mTime.value = "$mHour:$mMinute"
+            }
         }, mHour, mMinute, false
     )
 
@@ -304,6 +317,8 @@ fun BookingContent(
                 .padding(horizontal = 4.dp, vertical = 4.dp)
                 .fillMaxWidth()
                 .clickable {
+                    //mTimePickerDialog = System.currentTimeMillis()
+
                     mTimePickerDialog.show()
 
                 }) {

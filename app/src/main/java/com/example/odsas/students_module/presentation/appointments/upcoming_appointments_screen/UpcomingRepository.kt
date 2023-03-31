@@ -35,6 +35,7 @@ constructor(
         try {
 
             val snapshots = fireStoreDb.collection(bookingRootRef).document(userId).collection(userId)
+                .orderBy("dateInMilliseconds", Query.Direction.ASCENDING)//order by date
                 .whereGreaterThan("dateInMilliseconds", currentDateInMilliseconds.toLong())
                 .get()
                 .await()

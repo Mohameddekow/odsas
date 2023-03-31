@@ -102,6 +102,7 @@ fun SetUpHomeNavigation() {
         ) {
              UpcomingAppointmentScreen(
                 navController = navController,
+                 sharedNewsDetailsViewModel = sharedNewsDetailsViewModel
             )
         }
 

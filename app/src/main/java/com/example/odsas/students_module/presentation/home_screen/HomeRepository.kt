@@ -1,5 +1,8 @@
 package com.example.odsas.students_module.presentation.home_screen
 import com.example.odsas.commons.Resource
+import com.example.odsas.commons.convertDateAndTimeToMilliseconds
+import com.example.odsas.commons.getCurrentDate
+import com.example.odsas.commons.getCurrentTime
 import com.example.odsas.students_module.domain.model.BookingItemModel
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -25,10 +28,18 @@ constructor(
     ): Flow<Resource<List<BookingItemModel>>> = flow{
         emit(Resource.Loading(null))
 
+        val currentDateInMilliseconds = convertDateAndTimeToMilliseconds(mDateAndTime = "${getCurrentDate()} ${getCurrentTime()}")
+
         try {
 
+//            val snapshots = fireStoreDb.collection(bookingRootRef).document(userId).collection(userId)
+//                .orderBy("date", Query.Direction.ASCENDING)
+//                .get()
+//                .await()
+
             val snapshots = fireStoreDb.collection(bookingRootRef).document(userId).collection(userId)
-                .orderBy("date", Query.Direction.ASCENDING)
+                .orderBy("dateInMilliseconds", Query.Direction.ASCENDING)//order by date
+                .whereGreaterThan("dateInMilliseconds", currentDateInMilliseconds.toLong())
                 .get()
                 .await()
 

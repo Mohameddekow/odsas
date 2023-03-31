@@ -33,6 +33,7 @@ import com.example.odsas.students_module.presentation.screens.Screens
 import com.example.odsas.ui.theme.CustomBlue
 import com.example.odsas.ui.theme.CustomWhite
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun BookAppointmentScreen(navController: NavHostController) {
     Box(modifier = Modifier.fillMaxSize()){
