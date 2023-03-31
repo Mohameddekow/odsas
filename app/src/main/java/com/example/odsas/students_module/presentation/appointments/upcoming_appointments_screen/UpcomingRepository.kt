@@ -30,9 +30,6 @@ constructor(
         emit(Resource.Loading(null))
 
         val currentDateInMilliseconds = convertDateAndTimeToMilliseconds(mDateAndTime = "${getCurrentDate()} ${getCurrentTime()}")
-        val currentTime = getCurrentTime()
-
-
 
 
         try {
