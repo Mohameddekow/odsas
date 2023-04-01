@@ -102,35 +102,25 @@ fun NextAppointmentBox(
                             shape = RoundedCornerShape(2.dp)
                         )
                         .clickable {
-                            Toast
-                                .makeText(ctx, "navigating....", Toast.LENGTH_LONG)
-                                .show()
-
-
-//                stateZ.updateAppointment(
-//                    creationTimeMs = 1680212322346,
-//                    date = "30/3/2023",
-//                    desc = "nothing ......",
-//                    reason = "Fees",
-//                    time  = "10:30",
-//                    userId = userId!!,
-//                    bookingRootRef = BOOKING_APPOINTMENT_ROOT_REF
-//                )
-                            val appointmentBookedDetails = BookingItemModel(
-                                date = state?.get(0)?.date,
-                                time = state?.get(0)?.time,
-                                reason = state?.get(0)?.reason,
-                                desc = state?.get(0)?.desc,
-                                creationTimeMs = state?.get(0)?.creationTimeMs,
-                            )
-
-                            sharedViewModel.addBookingAppointmentDetails(appointmentBookedDetails)
-
-                            navController.navigate(Screens.UpdateBookedAppointmentScreen.route) {
-                                popUpTo(Screens.UpdateBookedAppointmentScreen.route) {
-                                    inclusive = true
-                                }
-                            }
+//                            Toast
+//                                .makeText(ctx, "navigating....", Toast.LENGTH_LONG)
+//                                .show()
+//
+//                            val appointmentBookedDetails = BookingItemModel(
+//                                date = state?.get(0)?.date,
+//                                time = state?.get(0)?.time,
+//                                reason = state?.get(0)?.reason,
+//                                desc = state?.get(0)?.desc,
+//                                creationTimeMs = state?.get(0)?.creationTimeMs,
+//                            )
+//
+//                            sharedViewModel.addBookingAppointmentDetails(appointmentBookedDetails)
+//
+//                            navController.navigate(Screens.UpdateBookedAppointmentScreen.route) {
+//                                popUpTo(Screens.UpdateBookedAppointmentScreen.route) {
+//                                    inclusive = true
+//                                }
+//                            }
                         }
                         .background(CustomBlue)
                         .padding(10.dp)
