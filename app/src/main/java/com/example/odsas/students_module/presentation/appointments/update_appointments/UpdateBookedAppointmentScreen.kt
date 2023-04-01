@@ -1,44 +1,25 @@
 package com.example.odsas.students_module.presentation.appointments.update_appointments
 
 import android.os.Build
-import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Close
-import androidx.compose.material.icons.rounded.Lock
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.toSize
 import androidx.navigation.NavHostController
 import com.example.odsas.R
-import com.example.odsas.commons.USERS_ROOT_REF
 import com.example.odsas.students_module.domain.model.BottomNavigationMenuItemModel
-import com.example.odsas.students_module.presentation.appointments.SharedNewsDetailsViewModel
+import com.example.odsas.students_module.presentation.appointments.SharedViewModel
 import com.example.odsas.students_module.presentation.home_screen.componets.BottomNavigationMenu
 import com.example.odsas.students_module.presentation.home_screen.componets.ScreenTitleBar
-import com.example.odsas.students_module.presentation.screens.Screens
-import com.example.odsas.ui.theme.CustomBlue
-import com.example.odsas.ui.theme.CustomWhite
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun UpdateBookedAppointmentScreen(
     navController: NavHostController,
-    sharedNewsDetailsViewModel: SharedNewsDetailsViewModel
+    sharedViewModel: SharedViewModel
 ) {
     Box(modifier = Modifier.fillMaxSize()){
         //Text(text = "Book appointment Screen", modifier = Modifier)
@@ -62,7 +43,7 @@ fun UpdateBookedAppointmentScreen(
 
             Spacer(modifier = Modifier.height(90.dp))
 
-            BookingContent(navController, sharedNewsDetailsViewModel)
+            BookingContent(navController, sharedViewModel)
 
         }
 

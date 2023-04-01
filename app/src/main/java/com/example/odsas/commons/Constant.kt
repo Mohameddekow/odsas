@@ -3,19 +3,164 @@ package com.example.odsas.commons
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
+import androidx.compose.material.AlertDialog
+import androidx.compose.material.Text
+import androidx.compose.material.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.text.style.TextAlign
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalTime
 import java.util.*
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.*
+import androidx.compose.runtime.MutableState
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 
 const val NOTIFICATION_ROOT_REF = "notifications"
 const val BOOKING_APPOINTMENT_ROOT_REF = "booking_appointment"
+const val BOOKED_DATE_TIME_ROOT_REF = "booked_date_time"
 
 const val PICK_IMAGE_CODE = 1234
 
 const val TASK_ROOT_REF = "tasks"
 const val USERS_ROOT_REF = "user_students"
+
+
+
+
+@Composable
+fun CustomDialog(
+    showDialog: MutableState<Boolean>,
+    onPerformAction: () -> Unit,
+    onDismissAction: () -> Unit,
+) {
+    Dialog(
+        onDismissRequest = { showDialog.value = false }) {
+        CustomDialogUI(
+            showDialog = showDialog,
+            onPerformAction = onPerformAction,
+            onDismissAction = onDismissAction,
+        )
+    }
+
+
+}
+
+
+//Layout
+@Composable
+fun CustomDialogUI(
+    modifier: Modifier = Modifier,
+    showDialog: MutableState<Boolean>,
+    onPerformAction: () -> Unit,
+    onDismissAction: () -> Unit,
+
+    ){
+    Card(
+        //shape = MaterialTheme.shapes.medium,
+        shape = RoundedCornerShape(10.dp),
+        // modifier = modifier.size(280.dp, 240.dp)
+        modifier = Modifier.padding(10.dp,5.dp,10.dp,10.dp),
+        elevation = 8.dp
+    ) {
+        Column(
+            modifier
+                .background(Color.White)) {
+
+            //.......................................................................
+
+
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text(
+                    text = "Booking Error",
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .padding(top = 5.dp)
+                        .fillMaxWidth(),
+                    style = MaterialTheme.typography.h5,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis,
+                    fontWeight = FontWeight.Bold
+                )
+                Text(
+                    text =  "This date and time had already been booked please select a different date and time",
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .padding(top = 10.dp, start = 3.dp, end = 3.dp)
+                        .fillMaxWidth(),
+                    style = MaterialTheme.typography.subtitle1
+                )
+            }
+            //.......................................................................
+            Row(
+                Modifier
+                    .fillMaxWidth()
+                    .padding(top = 10.dp)
+                    .background(Color.Blue.copy(0.6f)),
+                horizontalArrangement = Arrangement.SpaceAround) {
+
+                TextButton(
+                    modifier = Modifier.weight(0.5f),
+                    onClick = {
+                        //dismiss the dialog
+                        onDismissAction()
+
+                        showDialog.value = false
+                    }) {
+
+                    Text(
+                        "Cancel",
+                        fontWeight = FontWeight.Bold,
+                        color = Color.Red ,
+                        modifier = Modifier.padding(top = 5.dp, bottom = 5.dp)
+                    )
+                }
+                TextButton(
+                    modifier = Modifier.weight(0.5f),
+                    onClick = {
+                        //perform action
+                        onPerformAction()
+
+                        showDialog.value = false
+                    }) {
+                    Text(
+                        "Ok",
+                        fontWeight = FontWeight.ExtraBold,
+                        color = Color.Black,
+                        modifier = Modifier.padding(top = 5.dp, bottom = 5.dp)
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun SimpleAlertDialog() {
+    AlertDialog(
+        onDismissRequest = { },
+        confirmButton = {
+            TextButton(onClick = {})
+            { Text(text = "OK") }
+        },
+        dismissButton = {
+            TextButton(onClick = {})
+            { Text(text = "Cancel") }
+        },
+        title = { Text(text = "Already Booked date and time",textAlign = TextAlign.Center) },
+        text = { Text(text = "This date and time had already been booked \n please select a different date and time", textAlign = TextAlign.Center) }
+    )
+}
+
 
 fun convertDateAndTimeToMilliseconds(mDateAndTime: String,): Long {
     var date = Date()

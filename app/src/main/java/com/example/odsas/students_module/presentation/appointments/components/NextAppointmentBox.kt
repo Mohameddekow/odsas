@@ -12,16 +12,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -29,23 +24,18 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.odsas.R
-import com.example.odsas.commons.BOOKING_APPOINTMENT_ROOT_REF
 import com.example.odsas.students_module.domain.model.BookingItemModel
-import com.example.odsas.students_module.presentation.appointments.SharedNewsDetailsViewModel
-import com.example.odsas.students_module.presentation.appointments.upcoming_appointments_screen.UpcomingViewModel
-import com.example.odsas.students_module.presentation.appointments.update_appointments.UpdateBookedAppointmentsViewModel
+import com.example.odsas.students_module.presentation.appointments.SharedViewModel
 import com.example.odsas.students_module.presentation.home_screen.HomeViewModel
 import com.example.odsas.students_module.presentation.screens.Screens
-import com.example.odsas.ui.theme.CustomBlack
 import com.example.odsas.ui.theme.CustomBlue
 import com.example.odsas.ui.theme.CustomWhite
-import com.google.firebase.auth.FirebaseAuth
 
 
 @Composable
 fun NextAppointmentBox(
     navController: NavHostController,
-    sharedNewsDetailsViewModel: SharedNewsDetailsViewModel
+    sharedViewModel: SharedViewModel
 ) {
 
     val homeViewModel: HomeViewModel = hiltViewModel()
@@ -134,7 +124,7 @@ fun NextAppointmentBox(
                                 creationTimeMs = state?.get(0)?.creationTimeMs,
                             )
 
-                            sharedNewsDetailsViewModel.addBookingAppointmentDetails(appointmentBookedDetails)
+                            sharedViewModel.addBookingAppointmentDetails(appointmentBookedDetails)
 
                             navController.navigate(Screens.UpdateBookedAppointmentScreen.route) {
                                 popUpTo(Screens.UpdateBookedAppointmentScreen.route) {

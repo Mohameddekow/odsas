@@ -35,19 +35,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.odsas.R
 import com.example.odsas.commons.BOOKING_APPOINTMENT_ROOT_REF
-import com.example.odsas.commons.NOTIFICATION_ROOT_REF
 import com.example.odsas.commons.convertDateAndTimeToMilliseconds
 import com.example.odsas.commons.getCurrentTime
 import com.example.odsas.students_module.domain.model.DropDownItemsModel
-import com.example.odsas.students_module.presentation.appointments.SharedNewsDetailsViewModel
-import com.example.odsas.students_module.presentation.home_screen.componets.ScreenTitleBar
-import com.example.odsas.students_module.presentation.notification_screen.NotificationViewModel
+import com.example.odsas.students_module.presentation.appointments.SharedViewModel
 import com.example.odsas.students_module.presentation.screens.Screens
 import com.example.odsas.ui.theme.CustomBlue
 import com.example.odsas.ui.theme.CustomWhite
 import com.google.firebase.auth.FirebaseAuth
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 
@@ -55,7 +50,7 @@ import java.util.*
 @Composable
 fun BookingContent(
     navController: NavHostController,
-    sharedNewsDetailsViewModel: SharedNewsDetailsViewModel
+    sharedViewModel: SharedViewModel
 ) {
     val reasons = listOf<DropDownItemsModel>(
         DropDownItemsModel("Exams"),
@@ -65,7 +60,7 @@ fun BookingContent(
         DropDownItemsModel("Others"),
     )
 
-    val bookedAppointmentDetails = sharedNewsDetailsViewModel.bookedAppointmentDetails
+    val bookedAppointmentDetails = sharedViewModel.bookedAppointmentDetails
 
     val context = LocalContext.current
 

@@ -3,6 +3,7 @@ package com.example.odsas.students_module.presentation.book_appointment_screen
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Build
+import android.util.Log
 import android.widget.DatePicker
 import android.widget.Toast
 import androidx.annotation.RequiresApi
@@ -34,11 +35,12 @@ import androidx.compose.ui.unit.toSize
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.odsas.R
-import com.example.odsas.commons.BOOKING_APPOINTMENT_ROOT_REF
-import com.example.odsas.commons.NOTIFICATION_ROOT_REF
-import com.example.odsas.commons.convertDateAndTimeToMilliseconds
-import com.example.odsas.commons.getCurrentTime
+import com.example.odsas.commons.*
+import com.example.odsas.students_module.domain.model.BookedDateAndTimeItemModel
+import com.example.odsas.students_module.domain.model.BookingItemModel
 import com.example.odsas.students_module.domain.model.DropDownItemsModel
+import com.example.odsas.students_module.presentation.appointments.SharedViewModel
+import com.example.odsas.students_module.presentation.appointments.upcoming_appointments_screen.UpcomingViewModel
 import com.example.odsas.students_module.presentation.notification_screen.NotificationViewModel
 import com.example.odsas.students_module.presentation.screens.Screens
 import com.example.odsas.ui.theme.CustomBlue
@@ -50,8 +52,17 @@ import java.util.*
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun BookingContent(
-    navController: NavHostController
+    navController: NavHostController,
+    sharedViewModel: SharedViewModel
+
 ) {
+
+    //get list of appointment already booked from the upcoming appointments
+    val upcomingAppointments: UpcomingViewModel = hiltViewModel()
+    val bookedDateAndTime = upcomingAppointments.bookedDateAndTimeState.value.bookedDateAndTimeList
+
+    Log.d("booking page", bookedDateAndTime.toString())
+
     val reasons = listOf<DropDownItemsModel>(
         DropDownItemsModel("Exams"),
         DropDownItemsModel("Fees"),
@@ -151,16 +162,6 @@ fun BookingContent(
     // Initializing a Calendar
     val mCalendar = Calendar.getInstance()
 
-//    DATE_FORMAT_7 = EEE, MMM d, ''yy
-//    The output will be -: Wed, Dec 5, '18
-//    val firstApiFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")// HH:mm:ss")
-//    var y = ""
-//    var m = ""
-//    var d =""
-//    val date = LocalDate.parse("$y-$m-$d 09:00:00",firstApiFormat)//"2019-08-07 09:00:00" , firstApiFormat)
-
-
-
     // Fetching current year, month and day
     mYear = mCalendar.get(Calendar.YEAR)
     mMonth = mCalendar.get(Calendar.MONTH)
@@ -177,8 +178,6 @@ fun BookingContent(
     val mDatePickerDialog = DatePickerDialog(
         mContext,
         { _: DatePicker, mYear: Int, mMonth: Int, mDayOfMonth: Int ->
-
-           // y = mYear.toString(); m = mMonth.toString(); d = mDate.toString()
 
             mDate.value = "$mDayOfMonth/${mMonth+1}/$mYear"
 
@@ -203,13 +202,10 @@ fun BookingContent(
                 .fillMaxWidth()
                 .clickable {
 
-                    //disbale already selected dates
-
-
+                    //disable already selected dates
                     mDatePickerDialog.datePicker.minDate = System.currentTimeMillis()
 
                     mDatePickerDialog.show()
-
                 }) {
                 Row(
                     modifier = Modifier.padding(4.dp),
@@ -224,6 +220,7 @@ fun BookingContent(
 
                     IconButton(
                         onClick = {
+                            //diable past dates
                             mDatePickerDialog.datePicker.minDate = System.currentTimeMillis()
 
                             mDatePickerDialog.show()
@@ -285,21 +282,27 @@ fun BookingContent(
     // Value for storing time as a string
     val mTime = remember { mutableStateOf("") }
 
+
     val currentTime = getCurrentTime()
     // Creating a TimePicker dialog
     val mTimePickerDialog = TimePickerDialog(
         mContext,
         {_, mHour : Int, mMinute: Int ->
             val selectedTime = "$mHour:$mMinute"
-            if (selectedTime < currentTime){
-                Toast.makeText(context, "Please select upcoming time", Toast.LENGTH_LONG).show()
 
+//            if (selectedTime < currentTime){
+//                Toast.makeText(context, "Please select upcoming time", Toast.LENGTH_LONG).show()
+//            }else{
+//            }
+
+            val fullMinute = if (mMinute < 10){
+                "0$mMinute"
             }else{
-                mTime.value = "$mHour:$mMinute"
+                mMinute
             }
+            mTime.value = "$mHour:$fullMinute"
         }, mHour, mMinute, false
     )
-
 
     //time container Card
     Card(elevation = 10.dp, modifier = Modifier
@@ -317,7 +320,6 @@ fun BookingContent(
                 .padding(horizontal = 4.dp, vertical = 4.dp)
                 .fillMaxWidth()
                 .clickable {
-                    //mTimePickerDialog = System.currentTimeMillis()
 
                     mTimePickerDialog.show()
 
@@ -450,12 +452,16 @@ fun BookingContent(
     val notificatiomViewModel: NotificationViewModel = hiltViewModel()
 
     val auth: FirebaseAuth = FirebaseAuth.getInstance()
+    var showDialogBool by remember { mutableStateOf(false) }
 
+    var showDialog = remember{ mutableStateOf(true) }
     Box(modifier = Modifier
         .padding(1.dp, 0.dp, 1.dp, 0.dp)
         .fillMaxWidth()) {
         Button(
             onClick = {
+
+
 
                 //book
                 val userId = auth.currentUser?.uid
@@ -464,46 +470,64 @@ fun BookingContent(
                 val dateInMilliseconds = convertDateAndTimeToMilliseconds(mDateAndTime = "${mDate.value} ${mTime.value}") //date in millisocnds
                 val time = mTime.value
                 val desc = desc
-                val state = bookingViewModel.bookingListState.value
+
 
                 //val remainderTime = getTime()
 
                 if (userId != null) {
 
-                    //add  Booking
-                    bookingViewModel.addBookingToFireStore(
-                        reason,
-                        date,
-                        dateInMilliseconds,
-                        time,
-                        desc,
-                        userId,
-                        BOOKING_APPOINTMENT_ROOT_REF
-                    )
-                    //add notification
-                    notificatiomViewModel.addNotificationToFireStore(
-                        date,
-                        time,
-                        userId,
-                        NOTIFICATION_ROOT_REF,
-                        System.currentTimeMillis()
-                    )
+                    if (reason.isNotBlank() && date.isNotBlank() && time.isNotBlank()){
 
-                }
+                        if (bookedDateAndTime!!.contains(BookedDateAndTimeItemModel(date = date, time = time))){
+
+                            Toast.makeText(context, "This date and time had already been booked please select a different date and time", Toast.LENGTH_LONG).show()
+
+                            showDialogBool = true
+
+                        }
+                        else {
+
+                            //add  Booking
+                            bookingViewModel.addBookingToFireStore(
+                                reason,
+                                date,
+                                dateInMilliseconds,
+                                time,
+                                desc,
+                                userId,
+                                BOOKING_APPOINTMENT_ROOT_REF
+                            )
+                            //add notification
+                            notificatiomViewModel.addNotificationToFireStore(
+                                date,
+                                time,
+                                userId,
+                                NOTIFICATION_ROOT_REF,
+                                System.currentTimeMillis()
+                            )
+
+                            bookingViewModel.addBookedDateAndTimeToFireStore(
+                                date,
+                                time,
+                                userId,
+                                BOOKED_DATE_TIME_ROOT_REF
+                            )
+
+                            Toast.makeText(context, "Successfully Booked, date: ${mDate.value} time: ${mTime.value} ", Toast.LENGTH_SHORT).show()
+
+                            navController.navigate(Screens.HomeScreen.route) {
+                                popUpTo(Screens.HomeScreen.route) {
+                                    inclusive = true
+                                }
+                            }
 
 
-                Toast.makeText(context, "Booked", Toast.LENGTH_SHORT).show()
-
-                navController.navigate(Screens.HomeScreen.route) {
-                    popUpTo(Screens.HomeScreen.route) {
-                        inclusive = true
+                        }
+                    }else{
+                        Toast.makeText(context, "select date and time and give reason for your appointment", Toast.LENGTH_LONG).show()
                     }
+
                 }
-
-
-
-
-
 
 
 
@@ -514,6 +538,16 @@ fun BookingContent(
             colors = ButtonDefaults.buttonColors(CustomBlue),
             shape = RoundedCornerShape(10.dp)
         ) {
+            //show dialog
+            if (showDialogBool){
+                CustomDialog(showDialog = showDialog, onPerformAction = {
+                    showDialogBool = false
+
+                }) {
+                    showDialogBool = false
+                }
+            }
+
             Text(text = "Book appointment", color = CustomWhite)
         }
     }

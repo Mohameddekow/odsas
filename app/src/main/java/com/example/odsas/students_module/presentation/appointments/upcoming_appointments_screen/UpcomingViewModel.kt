@@ -8,29 +8,33 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.odsas.commons.BOOKED_DATE_TIME_ROOT_REF
 import com.example.odsas.commons.BOOKING_APPOINTMENT_ROOT_REF
 import com.example.odsas.commons.Resource
 import com.example.odsas.students_module.domain.model.BookingItemModel
+import com.example.odsas.students_module.presentation.appointments.SharedViewModel
+import com.example.odsas.students_module.presentation.states.BookedDateAndTimeState
 import com.example.odsas.students_module.presentation.states.BookingState
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @HiltViewModel
 class UpcomingViewModel
 @Inject
 constructor(
-    private val repository: UpcomingRepository
+    private val repository: UpcomingRepository,
 ): ViewModel() {
 
-    private val _fetchingTasksState: MutableLiveData<Resource<List<BookingItemModel>>> = MutableLiveData()
-    val fetchingTasksState: LiveData<Resource<List<BookingItemModel>>> get() = _fetchingTasksState
 
     private val _bookingListState = mutableStateOf(BookingState())
     val bookingListState: State<BookingState> = _bookingListState
+
+    private val _bookedDateAndTimeState = mutableStateOf(BookedDateAndTimeState())
+    val bookedDateAndTimeState: State<BookedDateAndTimeState> = _bookedDateAndTimeState
 
     val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
@@ -38,6 +42,11 @@ constructor(
         getAllBookings(
             auth.currentUser?.uid!!,
             BOOKING_APPOINTMENT_ROOT_REF
+        )
+
+        getAllBookedDateAndTime(
+            auth.currentUser?.uid!!,
+            BOOKED_DATE_TIME_ROOT_REF
         )
     }
 
@@ -50,18 +59,6 @@ constructor(
         viewModelScope.launch (){
 
             val result =  repository.getAllBookings(userId, bookingRootRef)
-
-//            try {
-//                result.collect {
-//                    _fetchingTasksState.postValue(it)
-////                    _bookingListState.value = BookingState(bookingList = it)
-//                }
-//
-//            }catch (e: Exception){
-//                // Resource.Error(e, null)
-//               // _fetchingTasksState.postValue(Resource.Error(e.message.toString(), null))
-//                _bookingListState.value = BookingState(error = e.message.toString())
-//            }
 
             result.collect(){ res ->
                 when (res) {
@@ -81,6 +78,42 @@ constructor(
             }
         }
     }
+
+
+
+
+
+
+    //  //fetch all booked dates and time
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun getAllBookedDateAndTime(
+        userId: String,
+        bookedDateTimeRootRef: String
+    ){
+        viewModelScope.launch (){
+
+            val result =  repository.getAllBookedDateAndTime(userId, bookedDateTimeRootRef)
+
+            result.collect(){ res ->
+                when (res) {
+                    is Resource.Success -> {
+                        _bookedDateAndTimeState.value = BookedDateAndTimeState(bookedDateAndTimeList = res.data)
+
+                        Log.d("Notifix Ve", res.data.toString())
+
+                    }
+                    is Resource.Error -> {
+                        _bookedDateAndTimeState.value = BookedDateAndTimeState(error = res.errorMessage.toString())
+                    }
+                    is Resource.Loading -> {
+                        _bookedDateAndTimeState.value = BookedDateAndTimeState(isLoading = true)
+                    }
+                }
+            }
+        }
+    }
+
+
 
 
 }

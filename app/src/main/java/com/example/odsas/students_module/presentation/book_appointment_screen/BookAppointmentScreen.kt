@@ -27,6 +27,7 @@ import androidx.navigation.NavHostController
 import com.example.odsas.R
 import com.example.odsas.commons.USERS_ROOT_REF
 import com.example.odsas.students_module.domain.model.BottomNavigationMenuItemModel
+import com.example.odsas.students_module.presentation.appointments.SharedViewModel
 import com.example.odsas.students_module.presentation.home_screen.componets.BottomNavigationMenu
 import com.example.odsas.students_module.presentation.home_screen.componets.ScreenTitleBar
 import com.example.odsas.students_module.presentation.screens.Screens
@@ -35,7 +36,7 @@ import com.example.odsas.ui.theme.CustomWhite
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun BookAppointmentScreen(navController: NavHostController) {
+fun BookAppointmentScreen(navController: NavHostController, sharedViewModel: SharedViewModel) {
     Box(modifier = Modifier.fillMaxSize()){
         //Text(text = "Book appointment Screen", modifier = Modifier)
 
@@ -58,7 +59,7 @@ fun BookAppointmentScreen(navController: NavHostController) {
 
             Spacer(modifier = Modifier.height(90.dp))
 
-            BookingContent(navController)
+            BookingContent(navController, sharedViewModel)
 
         }
 

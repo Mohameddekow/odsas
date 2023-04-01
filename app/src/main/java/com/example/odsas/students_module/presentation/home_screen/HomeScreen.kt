@@ -1,7 +1,6 @@
 package com.example.odsas.students_module.presentation.home_screen
 
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
@@ -11,15 +10,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.odsas.R
-import com.example.odsas.commons.Time
-import com.example.odsas.commons.getTimeDifference
 import com.example.odsas.students_module.domain.model.BottomNavigationMenuItemModel
-import com.example.odsas.students_module.presentation.appointments.SharedNewsDetailsViewModel
+import com.example.odsas.students_module.presentation.appointments.SharedViewModel
 import com.example.odsas.students_module.presentation.appointments.components.NextAppointmentBox
 import com.example.odsas.students_module.presentation.home_screen.componets.*
-import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.LocalTime
 import java.util.*
 
 
@@ -27,7 +21,7 @@ import java.util.*
 @Composable
 fun HomeScreen(
     navController: NavHostController,
-    sharedNewsDetailsViewModel: SharedNewsDetailsViewModel
+    sharedViewModel: SharedViewModel
 ) {
 
     val homeViewModel: HomeViewModel = hiltViewModel()
@@ -55,7 +49,7 @@ fun HomeScreen(
             Spacer(modifier = Modifier.height(20.dp))
             NextAppointmentBox(
                 navController = navController,
-                sharedNewsDetailsViewModel = sharedNewsDetailsViewModel
+                sharedViewModel = sharedViewModel
             )
 
             Spacer(modifier = Modifier.height(10.dp))

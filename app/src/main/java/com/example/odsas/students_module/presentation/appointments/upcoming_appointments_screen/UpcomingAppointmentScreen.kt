@@ -15,7 +15,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.odsas.students_module.domain.model.AppointmentsTabItemModel
 import com.example.odsas.students_module.domain.model.BookingItemModel
-import com.example.odsas.students_module.presentation.appointments.SharedNewsDetailsViewModel
+import com.example.odsas.students_module.presentation.appointments.SharedViewModel
 import com.example.odsas.students_module.presentation.appointments.components.AppointmentsTab
 import com.example.odsas.students_module.presentation.home_screen.componets.ScreenTitleBar
 import com.example.odsas.ui.theme.CustomBlack
@@ -23,7 +23,7 @@ import com.example.odsas.ui.theme.CustomBlack
 @Composable
 fun UpcomingAppointmentScreen(
     navController: NavHostController,
-    sharedNewsDetailsViewModel: SharedNewsDetailsViewModel
+    sharedViewModel: SharedViewModel
 ) {
 
     Column(
@@ -46,7 +46,7 @@ fun UpcomingAppointmentScreen(
         )
         Spacer(modifier = Modifier.height(10.dp))
 
-        AllUpcomingAppointments(navController, sharedNewsDetailsViewModel)
+        AllUpcomingAppointments(navController, sharedViewModel)
 
 //        UpcomingAppointmentItem("2 days", "Sun, Jan 19, 08.00am - 09.00am")
 //        Spacer(modifier = Modifier.height(2.dp))
@@ -64,7 +64,7 @@ fun UpcomingAppointmentScreen(
 @Composable
 fun AllUpcomingAppointments(
     navController: NavHostController,
-    sharedNewsDetailsViewModel: SharedNewsDetailsViewModel
+    sharedViewModel: SharedViewModel
 ) {
 
     val upcomingViewModel: UpcomingViewModel = hiltViewModel()
@@ -100,7 +100,7 @@ fun AllUpcomingAppointments(
                             creationTimeMs = item.creationTimeMs,
                         )
 
-                        sharedNewsDetailsViewModel.addBookingAppointmentDetails(appointmentBookedDetails)
+                        sharedViewModel.addBookingAppointmentDetails(appointmentBookedDetails)
 
                     }
 

@@ -9,7 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.odsas.deans_module.presentation.analysis_screen.AnalysisScreen
-import com.example.odsas.students_module.presentation.appointments.SharedNewsDetailsViewModel
+import com.example.odsas.students_module.presentation.appointments.SharedViewModel
 import com.example.odsas.students_module.presentation.book_appointment_screen.BookAppointmentScreen
 import com.example.odsas.students_module.presentation.home_screen.HomeScreen
 import com.example.odsas.students_module.presentation.notification_screen.NotificationScreen
@@ -26,7 +26,7 @@ import com.example.odsas.students_module.presentation.auth.registration_screen.R
 fun SetUpHomeNavigation() {
 
     val navController: NavHostController = rememberNavController()
-    val sharedNewsDetailsViewModel: SharedNewsDetailsViewModel = hiltViewModel()
+    val sharedViewModel: SharedViewModel = hiltViewModel()
 
     NavHost(
         navController = navController,
@@ -44,7 +44,7 @@ fun SetUpHomeNavigation() {
         ) {
             HomeScreen(
                 navController = navController,
-                sharedNewsDetailsViewModel = sharedNewsDetailsViewModel
+                sharedViewModel = sharedViewModel
             )
         }
 
@@ -53,6 +53,7 @@ fun SetUpHomeNavigation() {
         ) {
             BookAppointmentScreen(
                 navController = navController,
+                sharedViewModel = sharedViewModel
             )
         }
 
@@ -61,7 +62,7 @@ fun SetUpHomeNavigation() {
         ) {
             UpdateBookedAppointmentScreen(
                 navController = navController,
-                sharedNewsDetailsViewModel = sharedNewsDetailsViewModel
+                sharedViewModel = sharedViewModel
             )
         }
 
@@ -102,7 +103,7 @@ fun SetUpHomeNavigation() {
         ) {
              UpcomingAppointmentScreen(
                 navController = navController,
-                 sharedNewsDetailsViewModel = sharedNewsDetailsViewModel
+                 sharedViewModel = sharedViewModel
             )
         }
 

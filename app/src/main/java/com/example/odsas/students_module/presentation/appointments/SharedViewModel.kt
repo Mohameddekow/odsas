@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class SharedNewsDetailsViewModel
+class SharedViewModel
 @Inject
 constructor(
 //        private val newsDetailsUseCase: NewsDetailsUseCase,
