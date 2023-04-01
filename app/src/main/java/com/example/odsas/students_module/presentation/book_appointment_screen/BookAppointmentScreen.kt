@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.toSize
 import androidx.navigation.NavHostController
 import com.example.odsas.R
 import com.example.odsas.commons.USERS_ROOT_REF
+import com.example.odsas.commons.menuItems
 import com.example.odsas.students_module.domain.model.BottomNavigationMenuItemModel
 import com.example.odsas.students_module.presentation.appointments.SharedViewModel
 import com.example.odsas.students_module.presentation.home_screen.componets.BottomNavigationMenu
@@ -67,11 +68,12 @@ fun BookAppointmentScreen(navController: NavHostController, sharedViewModel: Sha
         //bottom navigation
         BottomNavigationMenu(
             navController = navController,
-            items = listOf(
-                BottomNavigationMenuItemModel(title = "home", iconId = R.drawable.home),
-                BottomNavigationMenuItemModel(title = "book appointment", iconId = R.drawable.book_appointment),
-                BottomNavigationMenuItemModel(title = "analysis", iconId = R.drawable.analysis)
-            ),
+            items = menuItems,
+//            listOf(
+//                BottomNavigationMenuItemModel(title = "home", iconId = R.drawable.home),
+//                BottomNavigationMenuItemModel(title = "book appointment", iconId = R.drawable.book_appointment),
+//                BottomNavigationMenuItemModel(title = "analysis", iconId = R.drawable.analysis)
+//            ),
             modifier = Modifier.align(Alignment.BottomCenter),
             selectedItemIndex = 1
         )

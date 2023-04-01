@@ -35,6 +35,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.odsas.commons.menuItems
 import com.example.odsas.ui.theme.*
 import kotlin.math.PI
 import kotlin.math.atan
@@ -107,11 +108,12 @@ fun AnalysisScreen(navController: NavHostController) {
 
         BottomNavigationMenu(
             navController = navController,
-            items = listOf(
-                BottomNavigationMenuItemModel(title = "home", iconId = R.drawable.home),
-                BottomNavigationMenuItemModel(title = "book appointment", iconId = R.drawable.book_appointment),
-                BottomNavigationMenuItemModel(title = "analysis", iconId = R.drawable.analysis)
-            ),
+            items = menuItems,
+//            listOf(
+//                BottomNavigationMenuItemModel(title = "home", iconId = R.drawable.home),
+//                BottomNavigationMenuItemModel(title = "book appointment", iconId = R.drawable.book_appointment),
+//                BottomNavigationMenuItemModel(title = "analysis", iconId = R.drawable.analysis)
+//            ),
             modifier = Modifier.align(Alignment.BottomCenter),
             selectedItemIndex = 2
         )

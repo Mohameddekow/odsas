@@ -24,6 +24,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import com.example.odsas.R
+import com.example.odsas.students_module.domain.model.BottomNavigationMenuItemModel
+import com.google.firebase.auth.FirebaseAuth
 
 const val NOTIFICATION_ROOT_REF = "notifications"
 const val BOOKING_APPOINTMENT_ROOT_REF = "booking_appointment"
@@ -33,6 +36,26 @@ const val PICK_IMAGE_CODE = 1234
 
 const val TASK_ROOT_REF = "tasks"
 const val USERS_ROOT_REF = "user_students"
+
+val userId: String = FirebaseAuth.getInstance().currentUser!!.uid
+
+val menuItems = if (userId == "k1iKECY65ChCW8tYifazvMPz2zZ2"){
+    listOf(
+        BottomNavigationMenuItemModel(title = "home", iconId = R.drawable.home),
+        //BottomNavigationMenuItemModel(title = "book appointment", iconId = R.drawable.book_appointment),
+        BottomNavigationMenuItemModel(title = "analysis", iconId = R.drawable.analysis)
+    )
+}else {
+    listOf(
+        BottomNavigationMenuItemModel(title = "home", iconId = R.drawable.home),
+        BottomNavigationMenuItemModel(title = "book appointment", iconId = R.drawable.book_appointment),
+        //BottomNavigationMenuItemModel(title = "analysis", iconId = R.drawable.analysis)
+    )
+}
+
+
+
+
 
 
 

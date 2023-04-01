@@ -18,6 +18,7 @@ import com.example.odsas.students_module.domain.model.BottomNavigationMenuItemMo
 import com.example.odsas.students_module.presentation.screens.Screens
 import com.example.odsas.ui.theme.CustomBlue
 import com.example.odsas.ui.theme.CustomWhite
+import com.google.firebase.auth.FirebaseAuth
 
 
 @Composable
@@ -63,47 +64,96 @@ fun BottomNavigationMenu(
                 ){
                     selectedItemIndex = index
 
-                    when (selectedItemIndex) {
-                        0 -> {
-                            if (navController.currentDestination?.route !== Screens.HomeScreen.route){
-                                //navigate only if we're not this destination
-                                navController.navigate(Screens.HomeScreen.route){
-                                    launchSingleTop = true
+                    val userId: String = FirebaseAuth.getInstance().currentUser!!.uid
 
-                                    popUpTo(Screens.HomeScreen.route){
-                                        inclusive = true
+                    if (userId == "k1iKECY65ChCW8tYifazvMPz2zZ2"){
+                        when (selectedItemIndex) {
+                            0 -> {
+                                if (navController.currentDestination?.route !== Screens.HomeScreen.route){
+                                    //navigate only if we're not this destination
+                                    navController.navigate(Screens.HomeScreen.route){
+                                        launchSingleTop = true
+
+                                        popUpTo(Screens.HomeScreen.route){
+                                            inclusive = true
+                                        }
+                                    }
+                                }
+
+
+                            }
+                            1 -> {
+                                if (navController.currentDestination?.route !== Screens.AnalysisScreen.route){
+                                    //navigate only if we're not this destination
+                                    navController.navigate(Screens.AnalysisScreen.route ){
+                                        launchSingleTop = true
+
+                                        popUpTo(Screens.BookAppointmentScreen.route ){
+                                            inclusive = false
+                                        }
                                     }
                                 }
                             }
+                            2 -> {
+                                if (navController.currentDestination?.route !== Screens.AnalysisScreen.route) {
+                                    //navigate only if we're not this destination
+                                    navController.navigate(Screens.AnalysisScreen.route){
 
+                                        launchSingleTop = true
 
+                                        popUpTo(Screens.AnalysisScreen.route){
+                                            inclusive = false
+                                        }
+                                    }
+                                }
+
+                            }
                         }
-                        1 -> {
-                            if (navController.currentDestination?.route !== Screens.BookAppointmentScreen.route){
-                                //navigate only if we're not this destination
-                                navController.navigate(Screens.BookAppointmentScreen.route ){
-                                    launchSingleTop = true
+                    }else{
 
-                                    popUpTo(Screens.BookAppointmentScreen.route ){
-                                        inclusive = false
+                        when (selectedItemIndex) {
+                            0 -> {
+                                if (navController.currentDestination?.route !== Screens.HomeScreen.route){
+                                    //navigate only if we're not this destination
+                                    navController.navigate(Screens.HomeScreen.route){
+                                        launchSingleTop = true
+
+                                        popUpTo(Screens.HomeScreen.route){
+                                            inclusive = true
+                                        }
+                                    }
+                                }
+
+
+                            }
+                            1 -> {
+                                if (navController.currentDestination?.route !== Screens.BookAppointmentScreen.route){
+                                    //navigate only if we're not this destination
+                                    navController.navigate(Screens.BookAppointmentScreen.route ){
+                                        launchSingleTop = true
+
+                                        popUpTo(Screens.BookAppointmentScreen.route ){
+                                            inclusive = false
+                                        }
                                     }
                                 }
                             }
-                        }
-                        2 -> {
-                            if (navController.currentDestination?.route !== Screens.AnalysisScreen.route) {
-                                //navigate only if we're not this destination
-                                navController.navigate(Screens.AnalysisScreen.route){
+                            2 -> {
+                                if (navController.currentDestination?.route !== Screens.AnalysisScreen.route) {
+                                    //navigate only if we're not this destination
+                                    navController.navigate(Screens.AnalysisScreen.route){
 
-                                    launchSingleTop = true
+                                        launchSingleTop = true
 
-                                    popUpTo(Screens.AnalysisScreen.route){
-                                        inclusive = false
+                                        popUpTo(Screens.AnalysisScreen.route){
+                                            inclusive = false
+                                        }
                                     }
                                 }
-                            }
 
+                            }
                         }
+
                     }
                 }
             }
