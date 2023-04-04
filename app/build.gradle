@@ -160,6 +160,9 @@ dependencies {
 
     // The compose calendar library
     implementation 'com.kizitonwose.calendar:compose:2.2.0'
+
+    // add below dependency in dependencies section.
+    implementation "com.github.PhilJay:MPAndroidChart:v3.1.0"
 }
 
 // Allow references to generated code

@@ -15,6 +15,13 @@ val LightGreyBg = Color(0xDCD9D9D9)
 val CustomBlue = Color(0xFF004AAD)
 
 
+// on below line we are adding different colors.
+val greenColor = Color(0xFF0F9D58)
+val blueColor = Color(0xFF2196F3)
+val yellowColor = Color(0xFFFFC107)
+val redColor = Color(0xFFF44336)
+val purpleColor = Color(0xFFBB86FC)
+
 
 val darkGray = Color(0xFF1a1717)
 val darkBlue = Color(0xFF18192b)

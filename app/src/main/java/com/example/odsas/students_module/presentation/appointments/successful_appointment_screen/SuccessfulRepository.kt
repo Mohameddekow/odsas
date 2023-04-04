@@ -56,6 +56,7 @@ constructor(
 
             val retrievedTasks = snapshots.toObjects(BookingItemModel::class.java)
 
+            Log.d("succ test", retrievedTasks.toString())
             emit(Resource.Success(retrievedTasks))
 
         }catch (e: Exception){

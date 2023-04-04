@@ -19,18 +19,20 @@ constructor(
     private val fireStoreDb: FirebaseFirestore
 ){
 
+
+    //suspend function fetching all appointments
+    //fetch them according to dates taking note of the time stamp as well
+    //if the date of the appointment is a future date push it to upcoming appointments
+    //otherwise they're regarded as past appointments
     @RequiresApi(Build.VERSION_CODES.O)
     suspend fun getAllBookings(
         userId: String,
         bookingRootRef: String
     ): Flow<Resource<List<BookingItemModel>>> = flow{
         emit(Resource.Loading(null))
-
-        val currentDateInMilliseconds = convertDateAndTimeToMilliseconds(mDateAndTime = "${getCurrentDate()} ${getCurrentTime()}")
-
-
+        val currentDateInMilliseconds = convertDateAndTimeToMilliseconds(
+            mDateAndTime = "${getCurrentDate()} ${getCurrentTime()}")
         try {
-
             val snapshots = fireStoreDb.collection(bookingRootRef).document(userId).collection(userId)
                 .orderBy("dateInMilliseconds", Query.Direction.ASCENDING)//order by date
                 .whereGreaterThan("dateInMilliseconds", currentDateInMilliseconds.toLong())

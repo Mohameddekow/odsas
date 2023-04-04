@@ -29,6 +29,9 @@ constructor(
     private val _bookingListState = mutableStateOf(BookingState())
     val bookingListState: State<BookingState> = _bookingListState
 
+    private val _allAppointmentAnalysisListState = mutableStateOf(BookingState())
+    val allAppointmentAnalysisListState: State<BookingState> = _allAppointmentAnalysisListState
+
     val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
     init {
@@ -36,9 +39,13 @@ constructor(
             auth.currentUser?.uid!!,
             BOOKING_APPOINTMENT_ROOT_REF
         )
+        getAllAppointmentAnalysis(
+            auth.currentUser?.uid!!,
+            BOOKING_APPOINTMENT_ROOT_REF
+        )
     }
 
-    //fetch all tasks
+    //fetch all booked appointment
     fun getAllBookings(
         userId: String,
         bookingRootRef: String
@@ -70,6 +77,45 @@ constructor(
                     }
                     is Resource.Loading -> {
                         _bookingListState.value = BookingState(isLoading = true)
+                    }
+                }
+            }
+        }
+    }
+
+
+    //fetch all booked appointment
+    fun getAllAppointmentAnalysis(
+        userId: String,
+        bookingRootRef: String
+    ){
+        viewModelScope.launch (){
+
+            val result =  repository.getAllAppointmentAnalysis(userId, bookingRootRef)
+
+            try {
+                result.collect {
+                    _fetchingTasksState.postValue(it)
+//                    _bookingListState.value = BookingState(bookingList = it)
+                }
+
+            }catch (e: Exception){
+                // Resource.Error(e, null)
+               // _fetchingTasksState.postValue(Resource.Error(e.message.toString(), null))
+                _allAppointmentAnalysisListState.value = BookingState(error = e.message.toString())
+            }
+
+            result.collect(){ res ->
+                when (res) {
+                    is Resource.Success -> {
+                        _allAppointmentAnalysisListState.value = BookingState(bookingList = res.data)
+
+                    }
+                    is Resource.Error -> {
+                        _allAppointmentAnalysisListState.value = BookingState(error = res.errorMessage.toString())
+                    }
+                    is Resource.Loading -> {
+                        _allAppointmentAnalysisListState.value = BookingState(isLoading = true)
                     }
                 }
             }
