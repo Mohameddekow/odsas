@@ -1,6 +1,4 @@
-# ODSAS
-
-# odsas kim updated
+# ODSAS 
 
 ## Contributing guidelines
 
