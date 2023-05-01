@@ -1,4 +1,4 @@
-# ODSA
+# ODSAs
 
 ## Contributing guidelines
 
